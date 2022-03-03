@@ -10,7 +10,7 @@ extension XCTestCase {
     file: StaticString = #filePath,
     line: UInt = #line
   ) {
-    let measurements: [Double] = fetchMeasurement(for: identifier).map(\.value).map(\.value)
+    let measurements: [Double] = fetchMeasurement(for: identifier).map(\.value.value)
     XCTAssertLessThanOrEqual(
       measurements[keyPath: aspect.measurementKeyPath],
       aspect.maximum,
