@@ -10,7 +10,6 @@ let package = Package(
   ],
   products: [
     .library(name: "Beton", targets: ["Beton"]),
-    .library(name: "XCTBeton", targets: ["XCTBeton"]),
   ],
   targets: [
     .target(name: "Beton"),
