@@ -1,13 +1,12 @@
 # Beton
 
-A description of this package.
+`Beton` is a [Swift](http://docs.swift.org) library built on top of
+the [Foundation](https://developer.apple.com/documentation/foundation) framework, that provides an additional layer of
+functionality, including easy localization, performance test measurement support, convenience functions and so on.
 
-```bash
-
-docc convert --transform-for-static-hosting \
---additional-symbol-graph-dir .build
-
-```
+It consists of two modules: `Beton` and `XCTBeton`. The `Beton` module offers generic purpose functionalities that may
+be useful for every application. The `XCTBeton` module extends the capabilities
+of [XCTest](https://developer.apple.com/documentation/xctest) by providing assertions for performance measurements.
 
 ## Adding `Beton` as a Dependency
 
@@ -27,7 +26,7 @@ let package = Package(
   targets: [
     .target(name: "MyApplication", dependencies: [
       .product(name: "Beton", package: "Beton"),
-      .product(name: "XCTBeton", package: "Beton"), 
+      .product(name: "XCTBeton", package: "Beton"),
     ])
   ]
 )
