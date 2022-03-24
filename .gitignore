@@ -5,3 +5,7 @@
 xcuserdata/
 DerivedData/
 .swiftpm/xcode/package.xcworkspace/contents.xcworkspacedata
+
+# Jazzy
+*.jazzy.yaml
+docs/generated
