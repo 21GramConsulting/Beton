@@ -24,7 +24,7 @@ extension OptionalTest {
     let goodNumber = try Int("100") ?! error()
 
     XCTAssertEqual(goodNumber, 100)
-    XCTAssertTrue(called)
+    XCTAssertFalse(called)
   }
 }
 

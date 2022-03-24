@@ -6,7 +6,7 @@ infix operator ?!
 /// The ``?!`` operator unwraps the left-hand side if it has a value, or it throws the right-hand side. The result of
 /// this operation will have the non-optional type of the left-hand side’s `Wrapped` type.
 ///
-/// Unlike the `??` operator, this operator *does not* use short-circuit evaluation. For example:
+/// Like the `??` operator, this operator uses short-circuit evaluation. For example:
 ///
 /// ```swift
 /// struct GenericError: Error {}
@@ -19,14 +19,14 @@ infix operator ?!
 ///
 /// let goodNumber = try Int("100") ?! error()
 /// // goodNumber == 100
-/// // called == true
+/// // called == false
 /// ```
 /// - Parameters:
 ///   - optional: An optional value.
 ///   - error: The error to throw if the optional value is `nil`.
-public func ?!<Value, Error>(optional: Optional<Value>, error: Error) throws -> Value where Error: Swift.Error {
+public func ?!<Value, Error>(optional: Optional<Value>, error: @autoclosure () -> Error) throws -> Value where Error: Swift.Error {
   switch optional {
-  case .none: throw error
+  case .none: throw error()
   case .some(let value): return value
   }
 }
