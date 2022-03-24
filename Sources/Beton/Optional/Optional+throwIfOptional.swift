@@ -20,6 +20,12 @@ infix operator ?!
 /// let goodNumber = try Int("100") ?! error()
 /// // goodNumber == 100
 /// // called == false
+///
+/// do {
+///   let _ = try Int("invalid-input") ?! error() // Throws GenericError
+/// } catch {
+///   // called == true
+/// }
 /// ```
 /// - Parameters:
 ///   - optional: An optional value.

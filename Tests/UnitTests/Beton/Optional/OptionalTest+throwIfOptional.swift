@@ -14,7 +14,7 @@ extension OptionalTest {
     }
   }
 
-  func test_throw_if_optional_does_not_short_circuiting() throws {
+  func test_throw_if_optional_does_short_circuiting() throws {
     var called = false
     func error() -> Error {
       called = true
@@ -25,6 +25,12 @@ extension OptionalTest {
 
     XCTAssertEqual(goodNumber, 100)
     XCTAssertFalse(called)
+
+    do {
+      let _ = try Int("invalid-input") ?! error()
+    } catch {
+      XCTAssertTrue(called)
+    }
   }
 }
 
