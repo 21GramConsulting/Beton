@@ -1,6 +1,10 @@
 import Beton
 
 extension XCTestCase {
+  @nonobjc open override func measure(_ block: () -> Void) {
+    self.measure(metrics: Self.defaultMetrics, options: Self.defaultMeasureOptions, block: block)
+  }
+
   @nonobjc open func measure(metrics: [XCTMetric], block: () -> Void) {
     self.measure(metrics: metrics, options: Self.defaultMeasureOptions, block: block)
   }
