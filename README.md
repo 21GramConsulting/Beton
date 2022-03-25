@@ -8,12 +8,12 @@ functionality, including easy localization, performance test measurement support
 
 ### Beton
 
-The `Beton` module offers generic purpose functionalities that may be useful for every application.
+The [`Beton` module](docs/Beton.md) offers generic purpose functionalities that may be useful for every application.
 
 ### XCTBeton
 
-The `XCTBeton` module extends the capabilities of [XCTest](https://developer.apple.com/documentation/xctest) by
-providing assertions for performance measurements.
+The [`XCTBeton` module](docs/XCTBeton.md) extends the capabilities
+of [XCTest](https://developer.apple.com/documentation/xctest) by providing assertions for performance measurements.
 
 ## Usage
 
