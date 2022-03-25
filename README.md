@@ -4,9 +4,16 @@
 the [Foundation](https://developer.apple.com/documentation/foundation) framework, that provides an additional layer of
 functionality, including easy localization, performance test measurement support, convenience functions and so on.
 
-It consists of two modules: `Beton` and `XCTBeton`. The `Beton` module offers generic purpose functionalities that may
-be useful for every application. The `XCTBeton` module extends the capabilities
-of [XCTest](https://developer.apple.com/documentation/xctest) by providing assertions for performance measurements.
+## Modules
+
+### Beton
+
+The `Beton` module offers generic purpose functionalities that may be useful for every application.
+
+### XCTBeton
+
+The `XCTBeton` module extends the capabilities of [XCTest](https://developer.apple.com/documentation/xctest) by
+providing assertions for performance measurements.
 
 ## Adding `Beton` as a Dependency
 
