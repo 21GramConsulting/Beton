@@ -7,10 +7,14 @@ extension CodeExamples {
   }
 
   func test_sequence_sum_with_throw_if_optional() throws {
-    let sum = try ["1", "2", "3"].map { try Int($0) ?! InvalidInt(value: $0) }.sum()
-    XCTAssertEqual(sum, 6)
+    func parseMeter(_ s: String) throws -> Measurement<UnitLength> {
+      Measurement(value: try Double(s) ?! InvalidValue(value: s), unit: .meters)
+    }
 
-    XCTAssertThrowsError(try ["1", "NaN", "3"].map { try Int($0) ?! InvalidInt(value: $0) }.sum())
+    let sum = try ["1", "2", "3"].map(parseMeter).sum()
+    XCTAssertEqual(sum.description, "6.0 m")
+
+    XCTAssertThrowsError(try ["1", "bad number", "3"].map(parseMeter).sum())
   }
 
   func test_sequence_sum() {
