@@ -6,9 +6,31 @@ functionality, including easy localization, performance test measurement support
 
 ## Modules
 
-//GENERATE: MODULES
+### Beton
 
-//GENERATE: USAGE
+The `Beton` module offers generic purpose functionalities that may be useful for every application.
+
+### XCTBeton
+
+The `XCTBeton` module extends the capabilities of [XCTest](https://developer.apple.com/documentation/xctest) by
+providing assertions for performance measurements.
+
+## Using the XCTBeton Module
+
+The following is a minimalistic example of how you write assertions to performance measurements.
+
+```swift
+import XCTBeton
+
+class PerformanceTests: XCTestCase {
+  func test_measureSum() {
+    measure {
+      let _ = (1..<1000).reduce(0, +)
+    }
+    XCTAssertMetric(.clock, .timeMonotonic, .average(maximum: 0.001))
+  }
+}
+```
 
 ## Adding `Beton` as a Dependency
 
