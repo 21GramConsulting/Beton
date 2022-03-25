@@ -15,6 +15,54 @@ The `Beton` module offers generic purpose functionalities that may be useful for
 The `XCTBeton` module extends the capabilities of [XCTest](https://developer.apple.com/documentation/xctest) by
 providing assertions for performance measurements.
 
+## Usage
+
+### Using the Beton Module
+
+The following example demonstrates the ``?!`` operator and ``sum`` extension
+of [`Sequence`](https://developer.apple.com/documentation/swift/sequence) from the `Beton` module.
+
+Notice that you do not need to import [Foundation](https://developer.apple.com/documentation/foundation) explicitly in
+order to get [`Measurement`](https://developer.apple.com/documentation/foundation/measurement). That is because you get
+it for free by importing `Beton.`
+
+```swift
+import Beton
+
+struct InvalidValue: Error {
+  let value: String
+}
+
+func parseMeter(_ s: String) throws -> Measurement<UnitLength> {
+  Measurement(value: try Double(s) ?! InvalidValue(value: s), unit: .meters)
+}
+
+func example() throws {
+  let sum = try ["1", "2", "3"].map(parseMeter).sum()
+  print(sum) // Prints: 6.0 m
+
+  let _ = try ["1", "bad number", "3"].map(parseMeter).sum()
+  // Throws: InvalidValue(value: "bad number")
+}
+```
+
+### Using the XCTBeton Module
+
+The following is a minimalistic example of how you write assertions to performance measurements.
+
+```swift
+import XCTBeton
+
+class PerformanceTests: XCTestCase {
+  func test_measureSum() {
+    measure {
+      let _ = (1..<1000).reduce(0, +)
+    }
+    XCTAssertMetric(.clock, .timeMonotonic, .average(maximum: 0.001))
+  }
+}
+```
+
 ## Adding `Beton` as a Dependency
 
 To use the `Beton` library in a SwiftPM project, add it to the dependencies for your package and your target. Your

@@ -10,6 +10,8 @@ functionality, including easy localization, performance test measurement support
 
 ## Usage
 
+### Using the Beton Module
+
 The following example demonstrates the ``?!`` operator and ``sum`` extension
 of [`Sequence`](https://developer.apple.com/documentation/swift/sequence) from the `Beton` module.
 
@@ -34,6 +36,23 @@ func example() throws {
 
   let _ = try ["1", "bad number", "3"].map(parseMeter).sum()
   // Throws: InvalidValue(value: "bad number")
+}
+```
+
+### Using the XCTBeton Module
+
+The following is a minimalistic example of how you write assertions to performance measurements. 
+
+```swift
+import XCTBeton
+
+class PerformanceTests: XCTestCase {
+  func test_measureSum() {
+    measure {
+      let _ = (1..<1000).reduce(0, +)
+    }
+    XCTAssertMetric(.clock, .timeMonotonic, .average(maximum: 0.001))
+  }
 }
 ```
 
