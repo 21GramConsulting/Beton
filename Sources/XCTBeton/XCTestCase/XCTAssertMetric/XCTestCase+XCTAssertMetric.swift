@@ -36,11 +36,12 @@ extension XCTestCase {
   }
 
   internal func fetchMeasurement<Identifier>(for identifier: Identifier) -> [XCTPerformanceMeasurement] where Identifier: XCTAssertMetricIdentifier {
-    lastRunMetrics
+    let measurements = lastRunMetrics
             .compactMap { $0 as? Identifier.RelatedMetric }
             .map(\.measurements)
             .reduce([], +)
             .filter { $0.identifier == identifier.identifier } // TODO: this naming is fucking dumb
+    return Array(measurements.dropFirst())
   }
 }
 
