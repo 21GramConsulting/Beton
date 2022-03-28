@@ -2,7 +2,7 @@ import XCTest
 import Beton
 
 extension CodeExamples {
-  fileprivate struct InvalidInt: Error {
+  fileprivate struct InvalidValue: Error {
     let value: String
   }
 
