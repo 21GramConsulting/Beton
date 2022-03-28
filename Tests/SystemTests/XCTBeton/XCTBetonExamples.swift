@@ -7,4 +7,15 @@ class XCTBetonExamples: XCTestCase {
     }
     XCTAssertMetric(.clock, .timeMonotonic, .average(maximum: 0.001))
   }
+
+  func test_measure_with_assertions_using_additional_metrics() {
+    let options = XCTMeasureOptions()
+    options.iterationCount = 100
+    measure(metrics: [XCTCPUMetric(), XCTMemoryMetric()], options: options) {
+      let _ = (1..<1000).reduce(0, +)
+    }
+    XCTAssertMetric(.cpu, .time, .average(maximum: 0.002))
+    XCTAssertMetric(.cpu, .cycles, .average(maximum: 2000))
+    XCTAssertMetric(.memory, .physical, .average(maximum: 20))
+  }
 }
