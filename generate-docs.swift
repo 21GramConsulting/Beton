@@ -73,10 +73,10 @@ struct ModuleUsages: Chunk {
 }
 
 let currentDirectory = URL(fileURLWithPath: #filePath).deletingLastPathComponent()
-let docsDirectory    = currentDirectory.appendingPathComponent("docs")
-let generatedDocs    = docsDirectory.appendingPathComponent("generated")
-let readmeTemplate   = docsDirectory.appendingPathComponent("README-template.md")
-let readme           = currentDirectory.appendingPathComponent("README.md")
+let docsDirectory    = currentDirectory / "docs"
+let generatedDocs    = docsDirectory / "generated"
+let readmeTemplate   = docsDirectory / "README-template.md"
+let readme           = currentDirectory / "README.md"
 
 try! FileManager.default.createDirectory(at: generatedDocs, withIntermediateDirectories: true)
 
@@ -168,7 +168,7 @@ makeReadme()
 
 for module in modules {
   // `.path` is kind of necessary. Otherwise URL behaves strangely in script. Investigate the 'why' at the some point.
-  let moduleDoc    = generatedDocs.appendingPathComponent(module.name.lowercased()).path
+  let moduleDoc    = (generatedDocs / module.name.lowercased()).path
   let moduleReadme = makeReadme(for: module)
   try """
       jazzy
