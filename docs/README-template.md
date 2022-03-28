@@ -8,8 +8,7 @@ functionality, including easy localization, performance test measurement support
 
 //GENERATE: MODULES
 
-//GENERATE: USAGE
-
+//GENERATE: USAGES
 ## Adding `Beton` as a Dependency
 
 To use the `Beton` library in a SwiftPM project, add it to the dependencies for your package and your target. Your

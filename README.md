@@ -6,18 +6,11 @@ functionality, including easy localization, performance test measurement support
 
 ## Modules
 
-### Beton
+- [Beton](#using-the-beton-module): Generic purpose functionalities that may be useful for every application.
+- [XCTBeton](#using-the-xctbeton-module): Extends the capabilities of [XCTest](https://developer.apple.com/documentation/xctest) by
+providing assertions for performance measurements.
 
-The [`Beton` module](docs/Beton.md) offers generic purpose functionalities that may be useful for every application.
-
-### XCTBeton
-
-The [`XCTBeton` module](docs/XCTBeton.md) extends the capabilities
-of [XCTest](https://developer.apple.com/documentation/xctest) by providing assertions for performance measurements.
-
-## Usage
-
-### Using the Beton Module
+## Using the Beton Module
 
 The following example demonstrates the ``?!`` operator and ``sum`` extension
 of [`Sequence`](https://developer.apple.com/documentation/swift/sequence) from the `Beton` module.
@@ -46,7 +39,7 @@ func example() throws {
 }
 ```
 
-### Using the XCTBeton Module
+## Using the XCTBeton Module
 
 The following is a minimalistic example of how you write assertions to performance measurements.
 

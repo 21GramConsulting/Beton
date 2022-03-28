@@ -2,72 +2,108 @@
 
 import Foundation
 
+// Helpers
+func /(url: URL, component: String) -> URL { url.appendingPathComponent(component) }
+// END: Helpers
+
 let currentDirectory = URL(fileURLWithPath: #filePath).deletingLastPathComponent()
 let docsDirectory    = currentDirectory.appendingPathComponent("docs")
 let generatedDocs    = docsDirectory.appendingPathComponent("generated")
 let readmeTemplate   = docsDirectory.appendingPathComponent("README-template.md")
-let readme           = generatedDocs.appendingPathComponent("README.md")
+let readme           = currentDirectory.appendingPathComponent("README.md")
 
 try! FileManager.default.createDirectory(at: generatedDocs, withIntermediateDirectories: true)
 
-struct Module: CustomStringConvertible {
-  let name:          String
-  let documentation: String
-
-  var description: String {
-    """
-    ### \(name)
-
-    \(documentation)
-
-    See the [API docs](../\(name.lowercased())/index.html).
-
-    """
-  }
+struct Module {
+  let name:        String
+  let description: String
 }
 
 let modules = [
   Module(
     name: "Beton",
-    documentation: "The `Beton` module offers generic purpose functionalities that may be useful for every application."
+    description: "Generic purpose functionalities that may be useful for every application."
   ),
   Module(
     name: "XCTBeton",
-    documentation: """
-                   The `XCTBeton` module extends the capabilities of [XCTest](https://developer.apple.com/documentation/xctest) by
-                   providing assertions for performance measurements.
-                   """
+    description: """
+                 Extends the capabilities of [XCTest](https://developer.apple.com/documentation/xctest) by
+                 providing assertions for performance measurements.
+                 """
   ),
 ]
 
-// TODO: Rework this.
-func makeReadmeFor(module: Module) -> URL {
-  var template = ""
+func makeReadme() {
   do {
-    template = try String(contentsOf: readmeTemplate)
+    let template = try String(contentsOf: readmeTemplate)
     let content = template
             .lines
             .map { line in
               switch line {
-              case _ where DocumentModules.matches(line: line): return DocumentModules(modules: modules).description
-              case _ where ModuleUsage.matches(line: line): return ModuleUsage(module: module).description
+              case _ where DocumentModules.matches(line: line):return DocumentModules(modules: modules).description
+              case _ where ModuleUsages.matches(line: line):return ModuleUsages(modules: modules).description
               default: return line
               }
             }
             .joined(separator: "\n")
-    let moduleReadme = generatedDocs.appendingPathComponent("\(module.name).md")
-    try content.write(to: moduleReadme, atomically: true, encoding: .utf8)
-    return moduleReadme
+    try content.write(to: readme, atomically: true, encoding: .utf8)
   } catch {
     dump(error)
     exit(1)
   }
 }
 
+func makeReadme(for module: Module) -> URL {
+  do {
+    let usage = try String(contentsOf: docsDirectory / module.name / "Usage.md")
+    let content = """
+                  # \(module.name)
+
+                  `\(module.name)` is a module of the `Beton` library which contains multiple modules:
+
+                  \(modules.map { "- [\($0.name)](../\($0.name.lowercased())/index.html)" }.joined(separator: "\n"))
+
+                  ## Usage
+
+                  \(usage)
+
+                  ## Adding as a Dependency
+
+                  To use the `\(module.name)` in a SwiftPM project, add it to the dependencies for your package and your target.
+
+                  ```swift
+                  // swift-tools-version:5.5.0
+
+                  import PackageDescription
+
+                  let package = Package(
+                    name: "MyApplication",
+                    dependencies: [
+                      .package(url: "https://github.com/21GramConsulting/Beton", .branch("develop")),
+                    ],
+                    targets: [
+                      .target(name: "MyApplication", dependencies: [
+                        .product(name: "\(module.name)", package: "Beton"),
+                      ])
+                    ]
+                  )
+                  ```
+                  """
+    let readme = generatedDocs / "\(module.name).md"
+    try content.write(to: readme, atomically: true, encoding: .utf8)
+    return readme
+  } catch {
+    dump(error)
+    exit(1)
+  }
+}
+
+makeReadme()
+
 for module in modules {
   // `.path` is kind of necessary. Otherwise URL behaves strangely in script. Investigate the 'why' at the some point.
-  let moduleDoc = generatedDocs.appendingPathComponent(module.name.lowercased()).path
-  let moduleReadme = makeReadmeFor(module: module)
+  let moduleDoc    = generatedDocs.appendingPathComponent(module.name.lowercased()).path
+  let moduleReadme = makeReadme(for: module)
   try """
       jazzy
       --author="21Gram Technology Kft."
@@ -98,20 +134,25 @@ struct DocumentModules: Chunk {
   let modules: [Module]
 
   var description: String {
-    modules.map(\.description).joined(separator: "\n")
+    modules.map { description(for: $0) }.joined(separator: "\n")
+  }
+
+  private func description(for module: Module) -> String {
+    "- [\(module.name)](#using-the-\(module.name.lowercased())-module): \(module.description)"
   }
 }
 
-struct ModuleUsage: Chunk {
-  static let marker = "USAGE"
-  let module: Module
+struct ModuleUsages: Chunk {
+  static let marker = "USAGES"
+  let modules: [Module]
 
-  var description: String { usage }
+  var description: String {
+    modules.map { usage(for: $0) }.joined(separator: "\n")
+  }
 
-  var usage: String {
-    let moduleUsage = docsDirectory.appendingPathComponent("\(module.name)-template.md")
+  private func usage(for module: Module) -> String {
     do {
-      let usage = try String(contentsOf: moduleUsage)
+      let usage = try String(contentsOf: docsDirectory / module.name / "Usage.md")
       return """
              ## Using the \(module.name) Module
 
