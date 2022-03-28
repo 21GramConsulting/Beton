@@ -4,7 +4,73 @@ import Foundation
 
 // Helpers
 func /(url: URL, component: String) -> URL { url.appendingPathComponent(component) }
+
+extension String {
+  func runAsCommand(using shell: String = "/bin/bash") throws {
+    let command = lines.joined(separator: " ")
+    return try runShell(command, using: shell)
+  }
+
+  var lines: [String] { components(separatedBy: .newlines) }
+}
+
+// Based on: https://stackoverflow.com/a/50035059
+func runShell(_ command: String, using shell: String = "/bin/bash") throws {
+  let task = Process()
+  task.arguments = ["-c", command]
+  task.executableURL = URL(fileURLWithPath: shell)
+  try task.run()
+  task.waitUntilExit()
+}
 // END: Helpers
+
+protocol Chunk: CustomStringConvertible {
+  static var marker: String { get }
+}
+
+extension Chunk {
+  static func matches(line: String) -> Bool {
+    line
+            .filter { !$0.isNewline && !$0.isWhitespace }
+            .starts(with: "//GENERATE:\(marker)")
+  }
+}
+
+struct DocumentModules: Chunk {
+  static let marker = "MODULES"
+  let modules: [Module]
+
+  var description: String {
+    modules.map { description(for: $0) }.joined(separator: "\n")
+  }
+
+  private func description(for module: Module) -> String {
+    "- [\(module.name)](#using-the-\(module.name.lowercased())-module): \(module.description)"
+  }
+}
+
+struct ModuleUsages: Chunk {
+  static let marker = "USAGES"
+  let modules: [Module]
+
+  var description: String {
+    modules.map { usage(for: $0) }.joined(separator: "\n")
+  }
+
+  private func usage(for module: Module) -> String {
+    do {
+      let usage = try String(contentsOf: docsDirectory / module.name / "Usage.md")
+      return """
+             ## Using the \(module.name) Module
+
+             \(usage)
+             """
+    } catch {
+      dump(error)
+      exit(1)
+    }
+  }
+}
 
 let currentDirectory = URL(fileURLWithPath: #filePath).deletingLastPathComponent()
 let docsDirectory    = currentDirectory.appendingPathComponent("docs")
@@ -115,70 +181,4 @@ for module in modules {
       --undocumented-text=""
       --output=\(moduleDoc)
       """.runAsCommand()
-}
-
-protocol Chunk: CustomStringConvertible {
-  static var marker: String { get }
-}
-
-extension Chunk {
-  static func matches(line: String) -> Bool {
-    line
-            .filter { !$0.isNewline && !$0.isWhitespace }
-            .starts(with: "//GENERATE:\(marker)")
-  }
-}
-
-struct DocumentModules: Chunk {
-  static let marker = "MODULES"
-  let modules: [Module]
-
-  var description: String {
-    modules.map { description(for: $0) }.joined(separator: "\n")
-  }
-
-  private func description(for module: Module) -> String {
-    "- [\(module.name)](#using-the-\(module.name.lowercased())-module): \(module.description)"
-  }
-}
-
-struct ModuleUsages: Chunk {
-  static let marker = "USAGES"
-  let modules: [Module]
-
-  var description: String {
-    modules.map { usage(for: $0) }.joined(separator: "\n")
-  }
-
-  private func usage(for module: Module) -> String {
-    do {
-      let usage = try String(contentsOf: docsDirectory / module.name / "Usage.md")
-      return """
-             ## Using the \(module.name) Module
-
-             \(usage)
-             """
-    } catch {
-      dump(error)
-      exit(1)
-    }
-  }
-}
-
-extension String {
-  func runAsCommand(using shell: String = "/bin/bash") throws {
-    let command = lines.joined(separator: " ")
-    return try runShell(command, using: shell)
-  }
-
-  var lines: [String] { components(separatedBy: .newlines) }
-}
-
-// Based on: https://stackoverflow.com/a/50035059
-func runShell(_ command: String, using shell: String = "/bin/bash") throws {
-  let task = Process()
-  task.arguments = ["-c", command]
-  task.executableURL = URL(fileURLWithPath: shell)
-  try task.run()
-  task.waitUntilExit()
 }
