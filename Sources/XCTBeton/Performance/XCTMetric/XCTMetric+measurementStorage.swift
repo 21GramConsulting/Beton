@@ -9,8 +9,7 @@ public extension XCTMetric {
 
 internal extension XCTMetric {
   func storing(measurements: [XCTPerformanceMeasurement]) -> [XCTPerformanceMeasurement] {
-    if results[originId] == nil { results[originId] = [] }
-    results[originId]?.append(contentsOf: measurements)
+    results[originId, default: []].append(contentsOf: measurements)
     return measurements
   }
 
