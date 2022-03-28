@@ -2,6 +2,26 @@ import Beton
 import XCTest
 
 extension XCTestCase {
+  /// Asserts that the given metric has the expected aspect.
+  ///
+  /// You can make assertions to performance metrics if you measured your code using some variant of ``measure(_:)``.
+  /// Make sure to assert only for ``XCTMetric``s you configured, otherwise you get an assertion error.
+  ///
+  /// ```swift
+  /// measure(metrics: [XCTCPUMetric()]) {
+  ///   let _ = (1..<1000).reduce(0, +)
+  /// }
+  /// XCTAssertMetric(.cpu, .time, .average(maximum: 0.002))
+  /// // The following assertion would fail, no memory results collected.
+  /// // XCTAssertMetric(.memory, .physical, .average(maximum: 20))
+  /// ```
+  /// - Parameters:
+  ///   - metric: The asserted performance metric.
+  ///   - identifier: Part of the metric to make assertion for.
+  ///   - aspect: The aspect to compare the performance metrics with.
+  ///   - message: An optional description of a failure.
+  ///   - file: The file where the failure occurs. The default is the filename of the test case where you call this function.
+  ///   - line: The line number where the failure occurs. The default is the line number where you call this function.
   public final func XCTAssertMetric<Identifier>(
     _ metric: XCTAssertMetric<Identifier>,
     _ identifier: Identifier,
