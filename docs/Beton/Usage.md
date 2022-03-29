@@ -8,6 +8,21 @@ it for free by importing `Beton.`
 import Beton
 ```
 
+### Convenience features for [`Bundle`](https://developer.apple.com/documentation/foundation/bundle)
+
+Using `Beton` it is quite easy to get localized bundles and values from them.
+
+Given you have a localization bundle in your project for the `hu_HU` locale with `"Apple" = "Alma"` the following
+example would return `"Alma"`.
+
+```swift
+let bundle          = Bundle.module.localizationBundles["hu_HU"]
+let localizedApple  = bundle?.localizedString("Apple")
+// localizedApple == "Alma"
+let localizedBanana = bundle?.localizedString("Banana")
+// localizedBanana == "Banana"
+```
+
 ### Convenience for [`Locale`](https://developer.apple.com/documentation/foundation/locale)
 
 Locales in `Beton` are expressible by string literals.
@@ -50,7 +65,7 @@ let arraySum = [1.1, 2.2, 3.3, 4.4, 5.5].sum()
 let rangeSum = (1..<10).sum()
 // rangeSum == 45
 
-let setSum   = Set(arrayLiteral: 1, 2, 3, 2, 3).sum()
+let setSum = Set(arrayLiteral: 1, 2, 3, 2, 3).sum()
 // setSum == 6
 ```
 
