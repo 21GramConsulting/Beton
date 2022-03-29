@@ -25,6 +25,7 @@ func runShell(_ command: String, using shell: String = "/bin/bash") throws {
 // END: Helpers
 
 protocol Chunk: CustomStringConvertible {
+  static func matches(line: String) -> Bool
   static var marker: String { get }
 }
 
@@ -69,6 +70,17 @@ struct ModuleUsages: Chunk {
       dump(error)
       exit(1)
     }
+  }
+}
+
+struct GoogleSiteVerification: Chunk {
+  static let marker = "<title>"
+  static func matches(line: String) -> Bool {
+    line.filter { !$0.isNewline && !$0.isWhitespace }.contains(marker)
+  }
+
+  var description: String {
+    #"<meta name="google-site-verification" content="hpaY76FpqCUjN6FjYXxXGLtER5n2qplgoV98C3CegpQ" />"#
   }
 }
 
@@ -164,6 +176,22 @@ func makeReadme(for module: Module) -> URL {
   }
 }
 
+func addGoogleSiteVerification(for module: Module) {
+  do {
+    let indexHtml = generatedDocs / module.name.lowercased() / "index.html"
+    try String(contentsOf: indexHtml)
+            .replacingOccurrences(
+              of: "(.*)(<meta charset='utf-8'>)",
+              with: "$1$2\n$1<meta name=\"google-site-verification\" content=\"hpaY76FpqCUjN6FjYXxXGLtER5n2qplgoV98C3CegpQ\" />",
+              options: .regularExpression
+            )
+            .write(to: indexHtml, atomically: true, encoding: .utf8)
+  } catch {
+    dump(error)
+    exit(1)
+  }
+}
+
 makeReadme()
 
 for module in modules {
@@ -181,4 +209,5 @@ for module in modules {
       --undocumented-text=""
       --output=\(moduleDoc)
       """.runAsCommand()
+  addGoogleSiteVerification(for: module)
 }
