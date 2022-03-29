@@ -73,17 +73,6 @@ struct ModuleUsages: Chunk {
   }
 }
 
-struct GoogleSiteVerification: Chunk {
-  static let marker = "<title>"
-  static func matches(line: String) -> Bool {
-    line.filter { !$0.isNewline && !$0.isWhitespace }.contains(marker)
-  }
-
-  var description: String {
-    #"<meta name="google-site-verification" content="hpaY76FpqCUjN6FjYXxXGLtER5n2qplgoV98C3CegpQ" />"#
-  }
-}
-
 let currentDirectory = URL(fileURLWithPath: #filePath).deletingLastPathComponent()
 let docsDirectory    = currentDirectory / "docs"
 let generatedDocs    = docsDirectory / "generated"
