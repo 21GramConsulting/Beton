@@ -25,15 +25,12 @@ func runShell(_ command: String, using shell: String = "/bin/bash") throws {
 // END: Helpers
 
 protocol Chunk: CustomStringConvertible {
-  static func matches(line: String) -> Bool
   static var marker: String { get }
 }
 
 extension Chunk {
-  static func matches(line: String) -> Bool {
-    line
-            .filter { !$0.isNewline && !$0.isWhitespace }
-            .starts(with: "//GENERATE:\(marker)")
+  func replaceMarker(in text: String) -> String {
+    text.replacingOccurrences(of: "//GENERATE: \(Self.marker)", with: description)
   }
 }
 
@@ -102,17 +99,9 @@ let modules = [
 
 func makeReadme() {
   do {
-    let template = try String(contentsOf: readmeTemplate)
-    let content = template
-            .lines
-            .map { line in
-              switch line {
-              case _ where DocumentModules.matches(line: line):return DocumentModules(modules: modules).description
-              case _ where ModuleUsages.matches(line: line):return ModuleUsages(modules: modules).description
-              default: return line
-              }
-            }
-            .joined(separator: "\n")
+    let template        = try String(contentsOf: readmeTemplate)
+    let chunks: [Chunk] = [DocumentModules(modules: modules), ModuleUsages(modules: modules)]
+    let content = chunks.reduce(template) { result, chunk in chunk.replaceMarker(in: result) }
     try content.write(to: readme, atomically: true, encoding: .utf8)
   } catch {
     dump(error)
