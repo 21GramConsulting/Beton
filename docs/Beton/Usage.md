@@ -8,6 +8,21 @@ it for free by importing `Beton.`
 import Beton
 ```
 
+### Convenience for [`Locale`](https://developer.apple.com/documentation/foundation/locale)
+
+Locales in `Beton` are expressible by string literals.
+
+```swift
+let locales: [Locale] = ["en_US", "en_GB", "hu_HU"]
+for locale in locales {
+  print("Currency symbol: \(locale.currencySymbol ?? "N/A")")
+}
+// Prints:
+// Currency symbol: $
+// Currency symbol: £
+// Currency symbol: Ft
+```
+
 ### ``?!`` operator
 
 The ``?!`` operator unwraps an [`Optional`](https://developer.apple.com/documentation/swift/optional) value if is
