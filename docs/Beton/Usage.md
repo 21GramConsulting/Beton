@@ -1,26 +1,50 @@
-The following example demonstrates the ``?!`` operator and ``sum`` extension
-of [`Sequence`](https://developer.apple.com/documentation/swift/sequence) from the `Beton` module.
+### Importing
 
-Notice that you do not need to import [Foundation](https://developer.apple.com/documentation/foundation) explicitly in
-order to get [`Measurement`](https://developer.apple.com/documentation/foundation/measurement). That is because you get
+To use `Beton` simply import it. If you need anything
+from [Foundation](https://developer.apple.com/documentation/foundation) you do not need to explicitly import it. You get
 it for free by importing `Beton.`
 
 ```swift
 import Beton
+```
 
-struct InvalidValue: Error {
-  let value: String
-}
+### ``?!`` operator
 
-func parseMeter(_ s: String) throws -> Measurement<UnitLength> {
-  Measurement(value: try Double(s) ?! InvalidValue(value: s), unit: .meters)
-}
+The ``?!`` operator unwraps an [`Optional`](https://developer.apple.com/documentation/swift/optional) value if is
+not `nil`, otherwise throws the given error.
 
-func example() throws {
-  let sum = try ["1", "2", "3"].map(parseMeter).sum()
-  print(sum) // Prints: 6.0 m
+```swift
+struct GenericError: Error {}
 
-  let _ = try ["1", "bad number", "3"].map(parseMeter).sum()
-  // Throws: InvalidValue(value: "bad number")
-}
+let answer = try Int("42") ?! GenericError()
+// answer == 42
+
+try Int("NaN") ?! GenericError()
+// Throws: GenericError()
+```
+
+### ``sum`` extension on [`Sequence`](https://developer.apple.com/documentation/swift/sequence)s
+
+Calculates the total of all elements in a sequence. Available on any sequence with values that conform
+to [`AdditiveArithmetic`](https://developer.apple.com/documentation/swift/additivearithmetic)
+
+```swift
+let arraySum = [1.1, 2.2, 3.3, 4.4, 5.5].sum()
+// arraySum == 16.5
+
+let rangeSum = (1..<10).sum()
+// rangeSum == 45
+
+let setSum   = Set(arrayLiteral: 1, 2, 3, 2, 3).sum()
+// setSum == 6
+```
+
+### Convenience for [`Measurement`](https://developer.apple.com/documentation/foundation/measurement)s
+
+In `Beton` measurements have default units and they conform
+to [`AdditiveArithmetic`](https://developer.apple.com/documentation/swift/additivearithmetic).
+
+```swift
+let sum = [1, 2, 3].map { Measurement<UnitLength>(value: $0, unit: .default) }.sum()
+// sum == 6.0 m
 ```
