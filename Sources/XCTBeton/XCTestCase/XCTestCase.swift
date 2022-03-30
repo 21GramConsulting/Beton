@@ -23,11 +23,11 @@ import class XCTest.XCTestCase
 /// ```
 open class XCTestCase: XCTest.XCTestCase {
   internal var lastRunMetrics: [XCTMetric] = []
+  /// Default options for ``XCTestCase/measure(_:)``. The default instance specifies 5 iteration counts.
+  open class override var defaultMeasureOptions: XCTMeasureOptions { XCTMeasureOptions() }
 }
 
 extension XCTest.XCTestCase {
   /// Default metrics for ``XCTestCase/measure(_:)``, returns only ``XCTClockMetric``.
   open class var defaultMetrics:        [XCTMetric] { [XCTClockMetric()] }
-  /// Default options for ``XCTestCase/measure(_:)``. The default instance speficies 5 iteration counts.
-  open class var defaultMeasureOptions: XCTMeasureOptions { XCTMeasureOptions() }
 }
