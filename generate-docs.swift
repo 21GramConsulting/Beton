@@ -185,6 +185,7 @@ for module in modules {
       --title="Swift Beton Docs - \(module.name) module"
       --readme=\(moduleReadme.path)
       --undocumented-text=""
+      --theme=jony
       --output=\(moduleDoc)
       """.runAsCommand()
   addGoogleSiteVerification(for: module)
