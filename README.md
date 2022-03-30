@@ -27,8 +27,9 @@ import Beton
 
 Using `Beton` it is quite easy to get localized bundles and values from them.
 
-Given you have a localization bundle in your project for the `hu_HU` locale with `"Apple" = "Alma"` the following
-example would return `"Alma"`.
+Suppose you have a localization bundle in your project for the `hu_HU` locale, with a translation for `"Apple" = "Alma"`
+, but you don't have one for `"Banana"` (which would be `"Banán"`). The following example finds the bundle, gets the
+localized version of `"Apple"`, and falls back to the given key `"Banana"`.
 
 ```swift
 let bundle          = Bundle.module.localizationBundles["hu_HU"]
