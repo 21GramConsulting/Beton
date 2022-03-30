@@ -23,7 +23,7 @@ it for free by importing `Beton.`
 import Beton
 ```
 
-### Convenience features for [`Bundle`](https://developer.apple.com/documentation/foundation/bundle)
+### Convenience API for [`Bundle`](https://developer.apple.com/documentation/foundation/bundle)
 
 Using `Beton` it is quite easy to get localized bundles and values from them.
 
@@ -39,7 +39,7 @@ let localizedBanana = bundle?.localizedString("Banana")
 // localizedBanana == "Banana"
 ```
 
-### Convenience for [`Locale`](https://developer.apple.com/documentation/foundation/locale)
+### Convenience API for [`Locale`](https://developer.apple.com/documentation/foundation/locale)
 
 Locales in `Beton` are expressible by string literals.
 
