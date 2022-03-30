@@ -70,6 +70,15 @@ struct ModuleUsages: Chunk {
   }
 }
 
+struct ReleaseVersion: Chunk {
+  static let marker = "LATEST_RELEASE_VERSION"
+  let releaseVersion: String
+
+  var description: String { releaseVersion }
+}
+
+let latestReleaseVersion = "1.0.0"
+
 let currentDirectory = URL(fileURLWithPath: #filePath).deletingLastPathComponent()
 let docsDirectory    = currentDirectory / "docs"
 let generatedDocs    = docsDirectory / "generated"
@@ -100,7 +109,11 @@ let modules = [
 func makeReadme() {
   do {
     let template        = try String(contentsOf: readmeTemplate)
-    let chunks: [Chunk] = [DocumentModules(modules: modules), ModuleUsages(modules: modules)]
+    let chunks: [Chunk] = [
+      DocumentModules(modules: modules),
+      ModuleUsages(modules: modules),
+      ReleaseVersion(releaseVersion: latestReleaseVersion)
+    ]
     let content = chunks.reduce(template) { result, chunk in chunk.replaceMarker(in: result) }
     try content.write(to: readme, atomically: true, encoding: .utf8)
   } catch {
@@ -135,7 +148,7 @@ func makeReadme(for module: Module) -> URL {
                   let package = Package(
                     name: "MyApplication",
                     dependencies: [
-                      .package(url: "https://github.com/21GramConsulting/Beton", .branch("develop")),
+                      .package(url: "https://github.com/21GramConsulting/Beton", from: "\(latestReleaseVersion)"),
                     ],
                     targets: [
                       .target(name: "MyApplication", dependencies: [

@@ -163,7 +163,7 @@ import PackageDescription
 let package = Package(
   name: "MyApplication",
   dependencies: [
-    .package(url: "https://github.com/21GramConsulting/Beton", .branch("develop")),
+    .package(url: "https://github.com/21GramConsulting/Beton", from: "1.0.0"),
   ],
   targets: [
     .target(name: "MyApplication", dependencies: [
