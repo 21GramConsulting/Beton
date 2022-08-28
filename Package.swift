@@ -6,7 +6,8 @@ let package = Package(
   name: "Beton",
   defaultLocalization: LanguageTag("en_US"),
   platforms: [
-    .macOS(.v12)
+    .macOS(.v12),
+    .iOS(.v13),
   ],
   products: [
     .library(name: "Beton", targets: ["Beton"]),
