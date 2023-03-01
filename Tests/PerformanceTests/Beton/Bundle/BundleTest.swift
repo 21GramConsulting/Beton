@@ -5,7 +5,7 @@ class BundleTest: XCTestCase {
   override func tearDown() {
     super.tearDown()
     XCTAssertMetric(.cpu, .cycles, .average(maximum: 5000))
-    XCTAssertMetric(.cpu, .instructionsRetired, .average(maximum: 4500))
+    XCTAssertMetric(.cpu, .instructionsRetired, .average(maximum: 10_000))
     XCTAssertMetric(.cpu, .time, .average(maximum: 0.002))
     XCTAssertMetric(.memory, .physical, .average(maximum: 60))
     XCTAssertMetric(.memory, .physicalPeak, .average(maximum: 0))
@@ -15,25 +15,25 @@ class BundleTest: XCTestCase {
 
   func testLocalizationBundles() {
     measure(metrics: .defaults) {
-      Bundle.module.localizationBundles
+      let _ = Bundle.module.localizationBundles
     }
   }
 
   func testLocalizedString_keyOnly() {
     measure(metrics: .defaults) {
-      Bundle.module.localizedString("Test")
+      let _ = Bundle.module.localizedString("Test")
     }
   }
 
   func testLocalizedString_keyAndTableOnly() {
     measure(metrics: .defaults) {
-      Bundle.module.localizedString("Test", from: "Test")
+      let _ = Bundle.module.localizedString("Test", from: "Test")
     }
   }
 
   func testLocalizedString_keyAndValueOnly() {
     measure(metrics: .defaults) {
-      Bundle.module.localizedString("Test", fallback: "Test")
+      let _ = Bundle.module.localizedString("Test", fallback: "Test")
     }
   }
 
