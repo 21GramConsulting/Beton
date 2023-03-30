@@ -1,5 +1,3 @@
-infix operator ?!
-
 /// Performs a `nil` checking operation, returning the wrapped value of an
 /// [`Optional`](https://developer.apple.com/documentation/swift/optional) instance or throwing the given error.
 ///
