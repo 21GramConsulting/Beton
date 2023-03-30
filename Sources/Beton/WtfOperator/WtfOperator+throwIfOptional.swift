@@ -28,8 +28,21 @@
 /// - Parameters:
 ///   - optional: An optional value.
 ///   - error: The error to throw if the optional value is `nil`.
-public func ?!<Value, Error>(optional: Optional<Value>, error: @autoclosure () -> Error) throws -> Value where Error: Swift.Error {
-  switch optional {
+public func ?!<Value, Error>(
+  optional: @autoclosure () -> Optional<Value>,
+  error: @autoclosure () -> Error
+) throws -> Value where Error: Swift.Error {
+  switch optional() {
+  case .none: throw error()
+  case .some(let value): return value
+  }
+}
+
+public func ?!<Value, Error>(
+  optional: @autoclosure () async -> Optional<Value>,
+  error: @autoclosure () -> Error
+) async throws -> Value where Error: Swift.Error {
+  switch await optional() {
   case .none: throw error()
   case .some(let value): return value
   }
