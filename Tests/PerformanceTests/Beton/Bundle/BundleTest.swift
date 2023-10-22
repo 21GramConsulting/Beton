@@ -21,19 +21,19 @@ class BundleTest: XCTestCase {
     }
   }
 
-  func testLocalizedString_keyOnly() {
+  func testLocalizedStringKeyOnly() {
     measure(metrics: .defaults) {
       let _ = Bundle.module.localizedString("Test")
     }
   }
 
-  func testLocalizedString_keyAndTableOnly() {
+  func testLocalizedStringKeyAndTableOnly() {
     measure(metrics: .defaults) {
       let _ = Bundle.module.localizedString("Test", from: "Test")
     }
   }
 
-  func testLocalizedString_keyAndValueOnly() {
+  func testLocalizedStringKeyAndValueOnly() {
     measure(metrics: .defaults) {
       let _ = Bundle.module.localizedString("Test", fallback: "Test")
     }

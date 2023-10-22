@@ -37,8 +37,8 @@ extension XCTAssertMetric {
 extension XCTAssertMetric.Aspect {
   var maximum: Double {
     switch self {
-    case let .average(maximum): return maximum
-    case let .relativeStandardDeviation(maximum): return maximum
+    case .average(let maximum): return maximum
+    case .relativeStandardDeviation(let maximum): return maximum
     }
   }
 }

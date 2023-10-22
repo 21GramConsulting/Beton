@@ -4,7 +4,7 @@ import XCTest
 @testable import Beton
 
 class LocaleTest: XCTestCase {
-  func test_Locale_from_string_literal() {
+  func testLocaleFromStringLiteral() {
     let locale: Locale = "hu_HU"
     XCTAssertEqual("hu_HU", locale.identifier)
   }

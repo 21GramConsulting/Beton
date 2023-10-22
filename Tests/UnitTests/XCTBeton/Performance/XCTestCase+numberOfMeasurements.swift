@@ -1,15 +1,15 @@
 @testable import XCTBeton
 
 extension XCTestCaseTest {
-  func test_number_of_measurements_equal_to_iteration_count() {
+  func testNumberOfMeasurementsEqualToIterationCount() {
     iterationCountTest(iterations: 3)
   }
 
-  func test_iteration_count_can_be_zero() {
+  func testIterationCountCanBeZero() {
     iterationCountTest(iterations: 0)
   }
 
-  func test_iteration_count_can_be_one() {
+  func testIterationCountCanBeOne() {
     iterationCountTest(iterations: 1)
   }
 

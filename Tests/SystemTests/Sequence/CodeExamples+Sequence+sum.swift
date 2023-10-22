@@ -6,7 +6,7 @@ extension CodeExamples {
     let value: String
   }
 
-  func test_sequence_sum_with_throw_if_optional() throws {
+  func testSequenceSumWithThrowIfOptional() throws {
     func parseMeter(_ s: String) throws -> Measurement<UnitLength> {
       Measurement(value: try Double(s) ?! InvalidValue(value: s), unit: .meters)
     }
@@ -17,7 +17,7 @@ extension CodeExamples {
     XCTAssertThrowsError(try ["1", "bad number", "3"].map(parseMeter).sum())
   }
 
-  func test_sequence_sum() {
+  func testSequenceSum() {
     let arraySum = [1.1, 2.2, 3.3, 4.4, 5.5].sum()
     XCTAssertEqual(arraySum, 16.5)
 

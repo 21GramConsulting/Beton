@@ -22,6 +22,7 @@ extension XCTestCase {
   ///   - message: An optional description of a failure.
   ///   - file: The file where the failure occurs. The default is the filename of the test case where you call this function.
   ///   - line: The line number where the failure occurs. The default is the line number where you call this function.
+  // swift-format-ignore
   public final func XCTAssertMetric<Identifier>(
     _ metric: XCTAssertMetric<Identifier>,
     _ identifier: Identifier,

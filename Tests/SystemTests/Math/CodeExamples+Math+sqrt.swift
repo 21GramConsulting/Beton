@@ -2,7 +2,7 @@ import Beton
 import XCTest
 
 extension CodeExamples {
-  func test_sqrt_on_measurement() {
+  func testSqrtOnMeasurement() {
     let measurement = sqrt(Measurement<UnitInformationStorage>(value: 64, unit: .bits))
     let limit = Measurement<UnitInformationStorage>(value: 1, unit: .bytes)
     if measurement <= limit {

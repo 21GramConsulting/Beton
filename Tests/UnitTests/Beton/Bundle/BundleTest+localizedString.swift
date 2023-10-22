@@ -4,21 +4,21 @@ import XCTest
 @testable import Beton
 
 extension BundleTest {
-  func testLocalizedString_keyOnly() {
+  func testLocalizedStringKeyOnly() {
     XCTAssertEqual(
       Bundle.module.localizedString("Test"),
       Bundle.module.localizedString(forKey: "Test", value: nil, table: nil)
     )
   }
 
-  func testLocalizedString_keyAndTableOnly() {
+  func testLocalizedStringKeyAndTableOnly() {
     XCTAssertEqual(
       Bundle.module.localizedString("Test", from: "Test"),
       Bundle.module.localizedString(forKey: "Test", value: nil, table: "Test")
     )
   }
 
-  func testLocalizedString_keyAndValueOnly() {
+  func testLocalizedStringKeyAndValueOnly() {
     XCTAssertEqual(
       Bundle.module.localizedString("Test", fallback: "Test"),
       Bundle.module.localizedString(forKey: "Test", value: "Test", table: nil)

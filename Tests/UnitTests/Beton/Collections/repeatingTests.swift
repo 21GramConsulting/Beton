@@ -3,44 +3,46 @@ import XCTBeton
 @testable import Beton
 
 class RepeatingTests: XCTestCase {
-  func testRepeating_sync_mapper() {
+  func testRepeatingSyncMapper() {
     XCTAssertEqual(repeating(count: 3) { $0 + 5 }, [5, 6, 7])
     XCTAssertEqual(repeating(count: 3) { $0 + 10 }, [10, 11, 12])
     XCTAssertEqual(repeating(count: 5) { $0 + 5 }, [5, 6, 7, 8, 9])
     XCTAssertEqual(repeating(count: 5) { $0 + 10 }, [10, 11, 12, 13, 14])
   }
 
-  func testRepeating_sync_resolver() {
+  func testRepeatingSyncResolver() {
     XCTAssertEqual(repeating(count: 3, 5), [5, 5, 5])
     XCTAssertEqual(repeating(count: 3, 10), [10, 10, 10])
     XCTAssertEqual(repeating(count: 5, 5), [5, 5, 5, 5, 5])
     XCTAssertEqual(repeating(count: 5, 10), [10, 10, 10, 10, 10])
   }
 
-  func testRepeating_sync_performer() {
+  func testRepeatingSyncPerformer() {
     var counter = 0
 
+    // swift-format-ignore
     repeating(count: 3, counter += 1)
     XCTAssertEqual(counter, 3)
 
+    // swift-format-ignore
     repeating(count: 5, counter += 2)
     XCTAssertEqual(counter, 13)
   }
 
-  func testRepeating_async_mapper() async throws {
+  func testRepeatingAsyncMapper() async throws {
     for try await item in await repeating(count: 10, { $0 + 5 }) {
       XCTAssertEqual(item.result, item.iteration + 5)
     }
   }
 
-  func testRepeating_async_resolver() async throws {
+  func testRepeatingAsyncResolver() async throws {
     for try await item in await repeating(count: 10, 100) {
       XCTAssertEqual(item.result, 100)
     }
   }
 
   // TODO: got a weird test failure once, better to investigate: {"code":null,"killed":false,"signal":"SIGSEGV","cmd":"/Applications/Xcode.app/Contents/Developer/usr/bin/xctest /Users/rocskaadam/src/21gram.consulting/src/Beton/.build/debug/BetonPackageTests.xctest"}
-  func testRepeating_async_performer() async throws {
+  func testRepeatingAsyncPerformer() async throws {
     var a = [Int]()
     await repeating(count: 13, a.append(1))
     print(a)

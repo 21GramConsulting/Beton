@@ -4,7 +4,7 @@ import XCTest
 @testable import Beton
 
 extension MeasurementTest {
-  func testInit_FloatLiteral() {
+  func testInitFloatLiteral() {
     XCTAssertEqual(123.0, Measurement<UnitAcceleration>(value: 123, unit: UnitAcceleration.default))
     XCTAssertEqual(123.0, Measurement<UnitAngle>(value: 123, unit: UnitAngle.default))
     XCTAssertEqual(123.0, Measurement<UnitArea>(value: 123, unit: UnitArea.default))

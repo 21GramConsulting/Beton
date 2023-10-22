@@ -4,7 +4,7 @@ import XCTest
 @testable import Beton
 
 extension MeasurementTest {
-  func testInit_IntegerLiteral() {
+  func testInitIntegerLiteral() {
     XCTAssertEqual(123, Measurement<UnitAcceleration>(value: 123, unit: UnitAcceleration.default))
     XCTAssertEqual(123, Measurement<UnitAngle>(value: 123, unit: UnitAngle.default))
     XCTAssertEqual(123, Measurement<UnitArea>(value: 123, unit: UnitArea.default))
