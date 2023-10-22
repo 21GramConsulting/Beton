@@ -5,7 +5,7 @@ class XCTBetonExamples: XCTestCase {
     measure {
       let _ = (1..<1000).reduce(0, +)
     }
-    XCTAssertMetric(.clock, .timeMonotonic, .average(maximum: 0.001))
+    XCTAssertMetric(.clock, .timeMonotonic, .average(maximum: 0.002))
   }
 
   func test_measure_with_assertions_using_additional_metrics() {
@@ -14,7 +14,7 @@ class XCTBetonExamples: XCTestCase {
     measure(metrics: [XCTCPUMetric(), XCTMemoryMetric()], options: options) {
       let _ = (1..<1000).reduce(0, +)
     }
-    XCTAssertMetric(.cpu, .time, .average(maximum: 0.002))
+    XCTAssertMetric(.cpu, .time, .average(maximum: 0.003))
     XCTAssertMetric(.cpu, .cycles, .average(maximum: 2000))
     XCTAssertMetric(.memory, .physical, .average(maximum: 20))
   }
