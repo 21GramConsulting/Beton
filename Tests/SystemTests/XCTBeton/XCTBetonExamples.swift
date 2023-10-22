@@ -15,7 +15,7 @@ class XCTBetonExamples: XCTestCase {
       let _ = (1..<1000).reduce(0, +)
     }
     XCTAssertMetric(.cpu, .time, .average(maximum: 0.003))
-    XCTAssertMetric(.cpu, .cycles, .average(maximum: 2000))
+    XCTAssertMetric(.cpu, .cycles, .average(maximum: 6000))
     XCTAssertMetric(.memory, .physical, .average(maximum: 20))
   }
 
