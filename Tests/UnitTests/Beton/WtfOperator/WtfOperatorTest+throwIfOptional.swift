@@ -1,6 +1,6 @@
-import XCTest
-import Foundation
 import Beton
+import Foundation
+import XCTest
 
 extension WtfOperatorTest {
   func test_throw_if_optional_returns_value() throws {
@@ -9,7 +9,7 @@ extension WtfOperatorTest {
   }
 
   func test_throw_if_optional_throws_given_error() throws {
-    XCTAssertThrowsError(try URL(string: "Not a URL") ?! GenericError()) { error in
+    XCTAssertThrowsError(try Optional<Any>.none ?! GenericError()) { error in
       XCTAssertEqual(error as? GenericError, GenericError())
     }
   }
@@ -34,4 +34,4 @@ extension WtfOperatorTest {
   }
 }
 
-fileprivate struct GenericError: Error, Equatable {}
+private struct GenericError: Error, Equatable {}
