@@ -4,7 +4,4 @@
 /*.xcodeproj
 xcuserdata/
 DerivedData/
-.swiftpm/xcode/package.xcworkspace/contents.xcworkspacedata
-
-# Jazzy
-docs/generated
+.swiftpm
