@@ -10,7 +10,7 @@ import AsyncAlgorithms
 ///   - count: Number of times to run the given function.
 ///   - function: The callback to execute mapping its results to the final result.
 /// - Returns: An array of all the values returned by the callback.
-public func repeating<T>(count: Int, _ function: (Int) -> T) -> [T] {
+@discardableResult public func repeating<T>(count: Int, _ function: (Int) -> T) -> [T] {
   (0..<count).map { function($0) }
 }
 
@@ -23,7 +23,7 @@ public typealias AsyncRepeatingChannel<T: Sendable> = AsyncChannel<(iteration: I
 ///   - count: Number of times to run the given function.
 ///   - function: The callback to execute, mapping results to the final result.
 /// - Returns: A channel of results.
-public func repeating<T>(
+@discardableResult public func repeating<T>(
   count: Int,
   _ function: @escaping (Int) async -> T
 ) async -> AsyncRepeatingChannel<T> where T: Sendable {
@@ -48,7 +48,7 @@ public func repeating<T>(
 ///   - count: Number of times to run the given function.
 ///   - function: The callback to execute mapping its results to the final result.
 /// - Returns: An array of all the values returned by the callback.
-public func repeating<T>(
+@discardableResult public func repeating<T>(
   count: Int,
   _ function: @autoclosure () -> T
 ) -> [T] {
@@ -61,7 +61,7 @@ public func repeating<T>(
 ///   - count: Number of times to run the given function.
 ///   - function: The callback to execute mapping its results to the final result.
 /// - Returns: A channel of all the values returned by the callback.
-public func repeating<T>(
+@discardableResult public func repeating<T>(
   count: Int,
   _ function: @escaping @autoclosure () async -> T
 ) async -> AsyncRepeatingChannel<T> where T: Sendable {

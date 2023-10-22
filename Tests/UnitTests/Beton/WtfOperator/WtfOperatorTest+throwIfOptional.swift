@@ -2,7 +2,7 @@ import XCTest
 import Foundation
 import Beton
 
-extension OptionalTest {
+extension WtfOperatorTest {
   func test_throw_if_optional_returns_value() throws {
     let url = try URL(string: "https://21gram.consulting") ?! GenericError()
     XCTAssertEqual(url.description, "https://21gram.consulting")
