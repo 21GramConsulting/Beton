@@ -2,6 +2,15 @@
   "object": {
     "pins": [
       {
+        "package": "swift-argument-parser",
+        "repositoryURL": "https://github.com/apple/swift-argument-parser.git",
+        "state": {
+          "branch": null,
+          "revision": "8f4d2753f0e4778c76d5f05ad16c74f707390531",
+          "version": "1.2.3"
+        }
+      },
+      {
         "package": "AsyncAlgorithms",
         "repositoryURL": "https://github.com/apple/swift-async-algorithms.git",
         "state": {
@@ -17,6 +26,42 @@
           "branch": null,
           "revision": "a902f1823a7ff3c9ab2fba0f992396b948eda307",
           "version": "1.0.5"
+        }
+      },
+      {
+        "package": "SwiftDocCPlugin",
+        "repositoryURL": "https://github.com/apple/swift-docc-plugin",
+        "state": {
+          "branch": null,
+          "revision": "26ac5758409154cc448d7ab82389c520fa8a8247",
+          "version": "1.3.0"
+        }
+      },
+      {
+        "package": "SymbolKit",
+        "repositoryURL": "https://github.com/apple/swift-docc-symbolkit",
+        "state": {
+          "branch": null,
+          "revision": "b45d1f2ed151d057b54504d653e0da5552844e34",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "package": "swift-format",
+        "repositoryURL": "https://github.com/apple/swift-format.git",
+        "state": {
+          "branch": "release/5.9",
+          "revision": "1323e87eced56bdcfed1bb78af1f16f39274d032",
+          "version": null
+        }
+      },
+      {
+        "package": "swift-syntax",
+        "repositoryURL": "https://github.com/apple/swift-syntax.git",
+        "state": {
+          "branch": "release/5.9",
+          "revision": "d3fe9e79ae9a60718c1e9b003b39cf66affd7c29",
+          "version": null
         }
       }
     ]

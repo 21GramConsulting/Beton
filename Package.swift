@@ -15,12 +15,14 @@ let package = Package(
   ],
   dependencies: [
     .package(url: "https://github.com/apple/swift-async-algorithms.git", from: "0.1.0"),
+    .package(url: "https://github.com/apple/swift-format.git", branch: "5,5"),
+    .package(url: "https://github.com/apple/swift-docc-plugin", from: "1.0.0"),
   ],
   targets: [
     .target(
       name: "Beton",
       dependencies: [
-        .product(name: "AsyncAlgorithms", package: "swift-async-algorithms"),
+        .product(name: "AsyncAlgorithms", package: "swift-async-algorithms")
       ]
     ),
     .target(
@@ -41,10 +43,10 @@ let package = Package(
 
 extension PackageDescription.Target {
   enum TestType: String {
-    case unit        = "Unit"
-    case component   = "Component"
+    case unit = "Unit"
+    case component = "Component"
     case integration = "Integration"
-    case system      = "System"
+    case system = "System"
     case performance = "Performance"
   }
 
@@ -53,7 +55,7 @@ extension PackageDescription.Target {
       name: "\(type.rawValue)Tests",
       dependencies: [
         .byName(name: "Beton"),
-        .byName(name: "XCTBeton")
+        .byName(name: "XCTBeton"),
       ],
       resources: [.process("Resources")]
     )
