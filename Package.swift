@@ -6,14 +6,23 @@ let package = Package(
   name: "Beton",
   defaultLocalization: LanguageTag("en_US"),
   platforms: [
-    .macOS(.v12)
+    .macOS(.v12),
+    .iOS(.v13),
   ],
   products: [
     .library(name: "Beton", targets: ["Beton"]),
     .library(name: "XCTBeton", targets: ["XCTBeton"]),
   ],
+  dependencies: [
+    .package(url: "https://github.com/apple/swift-async-algorithms.git", from: "0.1.0"),
+  ],
   targets: [
-    .target(name: "Beton"),
+    .target(
+      name: "Beton",
+      dependencies: [
+        .product(name: "AsyncAlgorithms", package: "swift-async-algorithms"),
+      ]
+    ),
     .target(
       name: "XCTBeton",
       dependencies: [
