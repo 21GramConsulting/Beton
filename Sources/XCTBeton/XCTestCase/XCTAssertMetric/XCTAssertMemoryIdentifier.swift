@@ -17,7 +17,7 @@ extension XCTAssertMemoryIdentifier: XCTAssertMetricIdentifier {
 
   public var identifier: String {
     switch self {
-    case .physical:     return "com.apple.dt.XCTMetric_Memory.physical"
+    case .physical: return "com.apple.dt.XCTMetric_Memory.physical"
     case .physicalPeak: return "com.apple.dt.XCTMetric_Memory.physical_peak"
     }
   }

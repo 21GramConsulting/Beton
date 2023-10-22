@@ -1,13 +1,13 @@
 import Beton
 
-fileprivate var results: [ObjectIdentifier: [XCTPerformanceMeasurement]] = [:]
-fileprivate var copyMap: [ObjectIdentifier: ObjectIdentifier]            = [:]
+private var results: [ObjectIdentifier: [XCTPerformanceMeasurement]] = [:]
+private var copyMap: [ObjectIdentifier: ObjectIdentifier] = [:]
 
-public extension XCTMetric {
-  var measurements: [XCTPerformanceMeasurement] { results[id] ?? [] }
+extension XCTMetric {
+  public var measurements: [XCTPerformanceMeasurement] { results[id] ?? [] }
 }
 
-internal extension XCTMetric {
+extension XCTMetric {
   func storing(measurements: [XCTPerformanceMeasurement]) -> [XCTPerformanceMeasurement] {
     results[originId, default: []].append(contentsOf: measurements)
     return measurements
@@ -24,10 +24,10 @@ internal extension XCTMetric {
   }
 }
 
-fileprivate extension XCTMetric {
-  var id: ObjectIdentifier { ObjectIdentifier(self) }
+extension XCTMetric {
+  fileprivate var id: ObjectIdentifier { ObjectIdentifier(self) }
 
-  var originId: ObjectIdentifier {
+  fileprivate var originId: ObjectIdentifier {
     var originId = id
     while copyMap[originId] != nil { originId = copyMap[originId]! }
     return originId

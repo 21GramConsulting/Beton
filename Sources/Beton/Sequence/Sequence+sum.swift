@@ -1,6 +1,6 @@
 import Foundation
 
-public extension Sequence where Self.Element: AdditiveArithmetic {
+extension Sequence where Self.Element: AdditiveArithmetic {
   /// Returns the sum of all elements in the sequence.
   ///
   /// The following examples show how to use ``sum`` on different sequences.
@@ -18,5 +18,5 @@ public extension Sequence where Self.Element: AdditiveArithmetic {
   ///
   /// - Returns: The total of the elements. If the sequence has no elements, returns
   /// [`zero`](https://developer.apple.com/documentation/swift/additivearithmetic/3126829-zero).
-  func sum() -> Element { reduce(.zero, +) }
+  public func sum() -> Element { reduce(.zero, +) }
 }

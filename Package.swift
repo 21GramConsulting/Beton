@@ -15,6 +15,7 @@ let package = Package(
   ],
   dependencies: [
     .package(url: "https://github.com/apple/swift-async-algorithms.git", from: "0.1.0"),
+    // TODO: this pile of shit doesn't work yet as a plugin at the time of writing. Revisit later.
     .package(url: "https://github.com/apple/swift-format.git", branch: "release/5.9"),
     .package(url: "https://github.com/apple/swift-docc-plugin", from: "1.3.0"),
   ],

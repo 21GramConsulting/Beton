@@ -1,4 +1,5 @@
 import Beton
+
 import class XCTest.XCTestCase
 
 /// The primary class to define tests in XCTBeton.
@@ -29,5 +30,5 @@ open class XCTestCase: XCTest.XCTestCase {
 
 extension XCTest.XCTestCase {
   /// Default metrics for ``XCTestCase/measure(_:)``, returns only ``XCTClockMetric``.
-  open class var defaultMetrics:        [XCTMetric] { [XCTClockMetric()] }
+  open class var defaultMetrics: [XCTMetric] { [XCTClockMetric()] }
 }

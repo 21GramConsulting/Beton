@@ -55,33 +55,36 @@ extension XCTestCase {
       : #"XCTAssertMetric<\#(Identifier.self).\#(identifier)> - \#(message)"#
   }
 
-  internal func fetchMeasurement<Identifier>(for identifier: Identifier) -> [XCTPerformanceMeasurement] where Identifier: XCTAssertMetricIdentifier {
-    let measurements = lastRunMetrics
-            .compactMap { $0 as? Identifier.RelatedMetric }
-            .map(\.measurements)
-            .reduce([], +)
-            .filter { $0.identifier == identifier.identifier } // TODO: this naming is fucking dumb
+  internal func fetchMeasurement<Identifier>(for identifier: Identifier)
+    -> [XCTPerformanceMeasurement] where Identifier: XCTAssertMetricIdentifier
+  {
+    let measurements =
+      lastRunMetrics
+      .compactMap { $0 as? Identifier.RelatedMetric }
+      .map(\.measurements)
+      .reduce([], +)
+      .filter { $0.identifier == identifier.identifier }  // TODO: this naming is fucking dumb
     return Array(measurements.dropFirst())
   }
 }
 
-fileprivate extension Array where Element == Double {
-  var average: Element { sum() / Double(count) }
+extension Array where Element == Double {
+  fileprivate var average: Element { sum() / Double(count) }
 
-  var standardDeviation: Element {
+  fileprivate var standardDeviation: Element {
     let squaredDifferences = map { pow($0 - average, 2.0) }
     let variance = squaredDifferences.reduce(.zero, +) / Double(count - 1)
     return sqrt(variance)
   }
 
-  var relativeStandardDeviation: Double { standardDeviation / average }
+  fileprivate var relativeStandardDeviation: Double { standardDeviation / average }
 
 }
 
-fileprivate extension XCTAssertMetric.Aspect {
-  var measurementKeyPath: KeyPath<[Double], Double> {
+extension XCTAssertMetric.Aspect {
+  fileprivate var measurementKeyPath: KeyPath<[Double], Double> {
     switch self {
-    case .average:                   return \.average
+    case .average: return \.average
     case .relativeStandardDeviation: return \.relativeStandardDeviation
     }
   }

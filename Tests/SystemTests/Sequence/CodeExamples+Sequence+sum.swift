@@ -1,5 +1,5 @@
-import XCTest
 import Beton
+import XCTest
 
 extension CodeExamples {
   fileprivate struct InvalidValue: Error {

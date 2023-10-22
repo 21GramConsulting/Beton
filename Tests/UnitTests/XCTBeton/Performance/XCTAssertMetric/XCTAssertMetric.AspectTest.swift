@@ -1,4 +1,5 @@
 import Beton
+
 @testable import XCTBeton
 
 class XCTAssertMetric_AspectTest: XCTestCase {

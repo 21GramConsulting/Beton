@@ -30,8 +30,8 @@
 /// - Parameters:
 ///   - optional: An optional value.
 ///   - error: The error to throw if the optional value is `nil`.
-public func ?!<Value, Error>(
-  optional: @autoclosure () -> Optional<Value>,
+public func ?! <Value, Error>(
+  optional: @autoclosure () -> Value?,
   error: @autoclosure () -> Error
 ) throws -> Value where Error: Swift.Error {
   switch optional() {
@@ -40,8 +40,8 @@ public func ?!<Value, Error>(
   }
 }
 
-public func ?!<Value, Error>(
-  optional: @autoclosure () async -> Optional<Value>,
+public func ?! <Value, Error>(
+  optional: @autoclosure () async -> Value?,
   error: @autoclosure () -> Error
 ) async throws -> Value where Error: Swift.Error {
   switch await optional() {
@@ -52,50 +52,44 @@ public func ?!<Value, Error>(
 
 // MARK: From Error To Error
 
-public func ?!<Value, Error>(
-  perform: @autoclosure() throws -> Value,
+public func ?! <Value, Error>(
+  perform: @autoclosure () throws -> Value,
   error: @autoclosure () -> Error
 ) throws -> Value where Error: Swift.Error {
-  do { return try perform() }
-  catch _ { throw error() }
+  do { return try perform() } catch _ { throw error() }
 }
 
-public func ?!<Value, Error>(
-  perform: @autoclosure() throws -> Value,
+public func ?! <Value, Error>(
+  perform: @autoclosure () throws -> Value,
   wrap: (any Swift.Error) -> Error
 ) throws -> Value where Error: Swift.Error {
-  do { return try perform() }
-  catch { throw wrap(error) }
+  do { return try perform() } catch { throw wrap(error) }
 }
 
-public func ?!<Value, Source, Destination>(
-  perform: @autoclosure() throws -> Value,
+public func ?! <Value, Source, Destination>(
+  perform: @autoclosure () throws -> Value,
   wrap: (Source) -> Destination
 ) throws -> Value where Source: Error, Destination: Error {
-  do { return try perform() }
-  catch let error as Source { throw wrap(error) }
+  do { return try perform() } catch let error as Source { throw wrap(error) }
 }
 
-public func ?!<Value, Error>(
-  perform: @autoclosure() async throws -> Value,
+public func ?! <Value, Error>(
+  perform: @autoclosure () async throws -> Value,
   error: @autoclosure () -> Error
 ) async throws -> Value where Error: Swift.Error {
-  do { return try await perform() }
-  catch _ { throw error() }
+  do { return try await perform() } catch _ { throw error() }
 }
 
-public func ?!<Value, Error>(
-  perform: @autoclosure() async throws -> Value,
+public func ?! <Value, Error>(
+  perform: @autoclosure () async throws -> Value,
   wrap: (Swift.Error) -> Error
 ) async throws -> Value where Error: Swift.Error {
-  do { return try await perform() }
-  catch { throw wrap(error) }
+  do { return try await perform() } catch { throw wrap(error) }
 }
 
-public func ?!<Value, Source, Destination>(
-  perform: @autoclosure() async throws -> Value,
+public func ?! <Value, Source, Destination>(
+  perform: @autoclosure () async throws -> Value,
   wrap: (Source) -> Destination
 ) async throws -> Value where Source: Error, Destination: Error {
-  do { return try await perform() }
-  catch let error as Source { throw wrap(error) }
+  do { return try await perform() } catch let error as Source { throw wrap(error) }
 }

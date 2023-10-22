@@ -1,5 +1,5 @@
-import Foundation
 import AsyncAlgorithms
+import Foundation
 
 // MARK: Mappers
 
@@ -14,7 +14,8 @@ import AsyncAlgorithms
   (0..<count).map { function($0) }
 }
 
-public typealias AsyncRepeatingChannel<T: Sendable> = AsyncChannel<(iteration: Int, result: T)> where T: Sendable
+public typealias AsyncRepeatingChannel<T: Sendable> = AsyncChannel<(iteration: Int, result: T)>
+where T: Sendable
 /// Runs the provided callback asynchronously,
 /// passing the current iteration count as an argument,
 /// and returning an AsyncSequence of the results.
@@ -65,9 +66,8 @@ public typealias AsyncRepeatingChannel<T: Sendable> = AsyncChannel<(iteration: I
   count: Int,
   _ function: @escaping @autoclosure () async -> T
 ) async -> AsyncRepeatingChannel<T> where T: Sendable {
-  await repeating(count: count) { _ in await function()}
+  await repeating(count: count) { _ in await function() }
 }
-
 
 // MARK: Performers
 
@@ -75,7 +75,7 @@ public typealias AsyncRepeatingChannel<T: Sendable> = AsyncChannel<(iteration: I
 /// - Parameters:
 ///   - count: Number of times to run the given function.
 ///   - function: The callback to execute `count` times.
-public func repeating(count: Int, _ function: @autoclosure () -> ()) {
+public func repeating(count: Int, _ function: @autoclosure () -> Void) {
   let _ = repeating(count: count) { [function] _ in function() }
 }
 
@@ -85,7 +85,7 @@ public func repeating(count: Int, _ function: @autoclosure () -> ()) {
 ///   - function: The callback to execute `count` times
 public func repeating(
   count: Int,
-  _ function: @autoclosure @escaping () async -> ()
+  _ function: @autoclosure @escaping () async -> Void
 ) async {
   let _ = await repeating(count: count) { _ in await function() }
 }

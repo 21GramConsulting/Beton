@@ -1,5 +1,5 @@
-import XCTest
 import Beton
+import XCTest
 
 extension CodeExamples {
   func test_localized_string_example() {
