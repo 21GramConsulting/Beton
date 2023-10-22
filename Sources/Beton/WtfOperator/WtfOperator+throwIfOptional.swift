@@ -1,9 +1,9 @@
 // MARK: From Optional To Error
 
 /// Performs a `nil` checking operation, returning the wrapped value of an
-/// [`Optional`](https://developer.apple.com/documentation/swift/optional) instance or throwing the given error.
+/// [`Optional`](https://developer.apple.com/documentation/docc) instance or throwing the given error.
 ///
-/// The ``?!`` operator unwraps the left-hand side if it has a value, or it throws the right-hand side. The result of
+/// The `@Name(?!)` operator unwraps the left-hand side if it has a value, or it throws the right-hand side. The result of
 /// this operation will have the non-optional type of the left-hand side’s `Wrapped` type.
 ///
 /// Like the `??` operator, this operator uses short-circuit evaluation. For example:
