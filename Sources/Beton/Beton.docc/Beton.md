@@ -1,8 +1,32 @@
 # ``Beton``
 
-Beton is a [Swift](http://docs.swift.org) library built on top of
-the [Foundation](https://developer.apple.com/documentation/foundation) framework, that provides an additional layer of
-functionality, including easy localization, performance test measurement support, and convenience functionality.
-For us, `Beton` is primarily, but not exclusively, useful for server-side Swift engineering.
+Beton is a Swift library that extends the Foundation framework
+with additional features and utilities.
+It's handy for server-side Swift development as well as
+traditional Swift development.
 
-* ``XCTBeton`` - The module that enriches [XCTest](https://developer.apple.com/documentation/xctest).
+## Overview
+
+Beton provides a set of generic functionalities that may be useful for any Swift application, such as:
+
+- Easy localization with string literals and bundles
+- Convenience extensions for common types and protocols
+
+Beton is designed to work seamlessly with SwiftUI, SwiftData, and other Apple frameworks. You can use Beton to create web apps, APIs, command-line tools, and more.
+
+## Topics
+
+### Essentials
+
+- ``Beton/Beton``
+
+### Localization
+
+- ``Beton/Locale``
+- ``Beton/LocalizedStringKey``
+
+### Convenience Extensions
+
+- ``Beton/Optional``
+- ``Beton/Sequence``
+- ``Beton/Measurement``
