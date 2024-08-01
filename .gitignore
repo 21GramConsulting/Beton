@@ -5,8 +5,4 @@
 xcuserdata/
 DerivedData/
 .swiftpm
-
-# Jazzy
-docs/generated
-
-TODO.md
+.netrc
