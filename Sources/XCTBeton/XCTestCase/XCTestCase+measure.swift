@@ -11,7 +11,7 @@ extension XCTestCase {
   /// ``XCTAssertMetric(_:_:_:_:file:line:)``.
   ///
   /// - Parameter block: A block whose performance is measured.
-  @nonobjc open override func measure(_ block: () -> Void) {
+  @nonobjc public override func measure(_ block: () -> Void) {
     self.measure(metrics: Self.defaultMetrics, options: Self.defaultMeasureOptions, block: block)
   }
 
@@ -23,7 +23,7 @@ extension XCTestCase {
   /// - Parameters:
   ///   - metrics: An array of metrics to measure, like CPU, memory, or elapsed time.
   ///   - block: A block whose performance is measured.
-  @nonobjc open func measure(metrics: [XCTMetric], block: () -> Void) {
+  @nonobjc public func measure(metrics: [XCTMetric], block: () -> Void) {
     self.measure(metrics: metrics, options: Self.defaultMeasureOptions, block: block)
   }
 
@@ -35,7 +35,7 @@ extension XCTestCase {
   /// - Parameters:
   ///   - options: Options to control the gathering of performance measurements.
   ///   - block: A block whose performance is measured.
-  @nonobjc open func measure(options: XCTMeasureOptions, block: () -> Void) {
+  @nonobjc public func measure(options: XCTMeasureOptions, block: () -> Void) {
     self.measure(metrics: Self.defaultMetrics, options: options, block: block)
   }
 
@@ -48,7 +48,8 @@ extension XCTestCase {
   ///   - metrics: An array of metrics to measure, like CPU, memory, or elapsed time.
   ///   - options: Options to control the gathering of performance measurements.
   ///   - block: A block whose performance is measured.
-  @nonobjc open func measure(metrics: [XCTMetric], options: XCTMeasureOptions, block: () -> Void) {
+  @nonobjc public func measure(metrics: [XCTMetric], options: XCTMeasureOptions, block: () -> Void)
+  {
     super.measure(metrics: metrics, options: options, block: block)
     precondition(lastRunMetrics.isEmpty, "Must not have performed measurements yet!")
     lastRunMetrics = metrics

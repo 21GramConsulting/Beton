@@ -30,5 +30,5 @@ open class XCTestCase: XCTest.XCTestCase {
 
 extension XCTest.XCTestCase {
   /// Default metrics for ``XCTestCase/measure(_:)``, returns only ``XCTClockMetric``.
-  open class var defaultMetrics: [XCTMetric] { [XCTClockMetric()] }
+  public class var defaultMetrics: [XCTMetric] { [XCTClockMetric()] }
 }
