@@ -30,7 +30,10 @@ class RepeatingTests: XCTestCase {
   }
 
   func testRepeatingAsyncMapper() async throws {
-    for try await item in await repeating(count: 10, { $0 + 5 }) {
+    let map = await repeating(count: 10) { (value: Int) async -> Int in
+      value + 5
+    }
+    for try await item in map {
       XCTAssertEqual(item.result, item.iteration + 5)
     }
   }
