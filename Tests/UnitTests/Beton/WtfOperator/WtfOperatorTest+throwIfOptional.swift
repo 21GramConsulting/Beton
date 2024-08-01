@@ -1,20 +1,20 @@
-import XCTest
-import Foundation
 import Beton
+import Foundation
+import XCTest
 
 extension WtfOperatorTest {
-  func test_throw_if_optional_returns_value() throws {
+  func testThrowIfOptionalReturnsValue() throws {
     let url = try URL(string: "https://21gram.consulting") ?! GenericError()
     XCTAssertEqual(url.description, "https://21gram.consulting")
   }
 
-  func test_throw_if_optional_throws_given_error() throws {
-    XCTAssertThrowsError(try URL(string: "Not a URL") ?! GenericError()) { error in
+  func testThrowIfOptionalThrowsGivenError() throws {
+    XCTAssertThrowsError(try Optional<Any>.none ?! GenericError()) { error in
       XCTAssertEqual(error as? GenericError, GenericError())
     }
   }
 
-  func test_throw_if_optional_does_short_circuiting() throws {
+  func testThrowIfOptionalDoesShortCircuiting() throws {
     var called = false
     func error() -> Error {
       called = true
@@ -34,4 +34,4 @@ extension WtfOperatorTest {
   }
 }
 
-fileprivate struct GenericError: Error, Equatable {}
+private struct GenericError: Error, Equatable {}

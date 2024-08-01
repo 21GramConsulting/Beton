@@ -1,7 +1,7 @@
 import Foundation
 
-public extension Bundle {
-  var localizationBundles: [Locale: Bundle] {
+extension Bundle {
+  public var localizationBundles: [Locale: Bundle] {
     localizations
       .compactMap { [self] in
         guard let path = path(forResource: $0, ofType: "lproj") else { return nil }

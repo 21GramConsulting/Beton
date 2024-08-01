@@ -1,9 +1,9 @@
 import Foundation
 
-public extension Sequence where Self.Element: AdditiveArithmetic {
+extension Sequence where Self.Element: AdditiveArithmetic {
   /// Returns the sum of all elements in the sequence.
   ///
-  /// The following examples show how to use ``sum`` on different sequences.
+  /// The following examples show how to use `@CodeVoice(sum)` on different sequences.
   ///
   /// ```swift
   /// let arraySum = [1.1, 2.2, 3.3, 4.4, 5.5].sum()
@@ -17,6 +17,7 @@ public extension Sequence where Self.Element: AdditiveArithmetic {
   /// ```
   ///
   /// - Returns: The total of the elements. If the sequence has no elements, returns
-  /// [`zero`](https://developer.apple.com/documentation/swift/additivearithmetic/3126829-zero).
-  func sum() -> Element { reduce(.zero, +) }
+  /// `@Link(identifier: "https://developer.apple.com/documentation/swift/additivearithmetic/3126829-zero", text: "zero")`.
+
+  public func sum() -> Element { reduce(.zero, +) }
 }

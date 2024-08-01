@@ -1,4 +1,5 @@
 import Beton
+
 import class XCTest.XCTMemoryMetric
 
 /// A metric to record the physical memory that a performance test uses.
@@ -13,7 +14,10 @@ public class XCTMemoryMetric: XCTest.XCTMemoryMetric, XCTMetric {
   /// Stores the measurement results of
   /// [`reportMeasurements(from:to:)`](https://developer.apple.com/documentation/xctest/xctmetric/3194241-reportmeasurements)
   /// allowing you to make assertions to them.
-  public override func reportMeasurements(from startTime: XCTPerformanceMeasurementTimestamp, to endTime: XCTPerformanceMeasurementTimestamp) throws -> [XCTPerformanceMeasurement] {
+  public override func reportMeasurements(
+    from startTime: XCTPerformanceMeasurementTimestamp,
+    to endTime: XCTPerformanceMeasurementTimestamp
+  ) throws -> [XCTPerformanceMeasurement] {
     storing(measurements: try super.reportMeasurements(from: startTime, to: endTime))
   }
 

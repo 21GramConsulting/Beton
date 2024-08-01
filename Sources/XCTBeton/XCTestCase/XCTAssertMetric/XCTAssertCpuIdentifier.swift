@@ -24,8 +24,8 @@ extension XCTAssertCpuIdentifier: XCTAssertMetricIdentifier {
 
   public var identifier: String {
     switch self {
-    case .time:                return "com.apple.dt.XCTMetric_CPU.time"
-    case .cycles:              return "com.apple.dt.XCTMetric_CPU.cycles"
+    case .time: return "com.apple.dt.XCTMetric_CPU.time"
+    case .cycles: return "com.apple.dt.XCTMetric_CPU.cycles"
     case .instructionsRetired: return "com.apple.dt.XCTMetric_CPU.instructions_retired"
     }
   }

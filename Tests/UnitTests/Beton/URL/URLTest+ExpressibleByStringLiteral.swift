@@ -1,9 +1,10 @@
 import Foundation
 import XCTest
+
 @testable import Beton
 
 extension URLTest {
-  func testInit_stringLiteral() {
+  func testInitStringLiteral() {
     XCTAssertEqual("https://google.com", URL(string: "https://google.com"))
   }
 }

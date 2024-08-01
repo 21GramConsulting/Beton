@@ -1,4 +1,4 @@
-// swift-tools-version:5.5
+// swift-tools-version:5.9
 
 import PackageDescription
 
@@ -7,20 +7,24 @@ let package = Package(
   defaultLocalization: LanguageTag("en_US"),
   platforms: [
     .macOS(.v12),
-    .iOS(.v13),
+    .iOS(.v15),
+    .tvOS(.v15),
+    .watchOS(.v8),
+    .visionOS(.v1),
   ],
   products: [
     .library(name: "Beton", targets: ["Beton"]),
     .library(name: "XCTBeton", targets: ["XCTBeton"]),
   ],
   dependencies: [
-    .package(url: "https://github.com/apple/swift-async-algorithms.git", from: "0.1.0"),
+    .package(url: "https://github.com/apple/swift-async-algorithms.git", from: "1.0.0"),
+    .package(url: "https://github.com/apple/swift-docc-plugin", from: "1.3.0"),
   ],
   targets: [
     .target(
       name: "Beton",
       dependencies: [
-        .product(name: "AsyncAlgorithms", package: "swift-async-algorithms"),
+        .product(name: "AsyncAlgorithms", package: "swift-async-algorithms")
       ]
     ),
     .target(
@@ -41,10 +45,10 @@ let package = Package(
 
 extension PackageDescription.Target {
   enum TestType: String {
-    case unit        = "Unit"
-    case component   = "Component"
+    case unit = "Unit"
+    case component = "Component"
     case integration = "Integration"
-    case system      = "System"
+    case system = "System"
     case performance = "Performance"
   }
 
@@ -53,7 +57,7 @@ extension PackageDescription.Target {
       name: "\(type.rawValue)Tests",
       dependencies: [
         .byName(name: "Beton"),
-        .byName(name: "XCTBeton")
+        .byName(name: "XCTBeton"),
       ],
       resources: [.process("Resources")]
     )
