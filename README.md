@@ -1,5 +1,9 @@
 # Beton
 
+[![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2F21GramConsulting%2FBeton%2Fbadge%3Ftype%3Dswift-versions)](https://swiftpackageindex.com/21GramConsulting/Beton)
+
+[![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2F21GramConsulting%2FBeton%2Fbadge%3Ftype%3Dplatforms)](https://swiftpackageindex.com/21GramConsulting/Beton)
+
 `Beton` is a [Swift](http://docs.swift.org) library built on top of
 the [Foundation](https://developer.apple.com/documentation/foundation) framework, that provides an additional layer of
 functionality, including easy localization, performance test measurement support, and convenience functionality.
