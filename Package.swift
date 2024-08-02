@@ -36,10 +36,9 @@ let package = Package(
       swiftSettings: swiftSettings
     ),
     .testTarget(type: .unit),
-    .testTarget(type: .component),
-    .testTarget(type: .integration),
-    .testTarget(type: .system),
     .testTarget(type: .performance),
+    .testTarget(type: .regression),
+    .testTarget(type: .userAcceptance),
   ]
 )
 
@@ -48,10 +47,9 @@ let package = Package(
 extension PackageDescription.Target {
   enum TestType: String {
     case unit = "Unit"
-    case component = "Component"
-    case integration = "Integration"
-    case system = "System"
     case performance = "Performance"
+    case regression = "Regression"
+    case userAcceptance = "UserAcceptance"
   }
 
   static func testTarget(type: TestType) -> PackageDescription.Target {
