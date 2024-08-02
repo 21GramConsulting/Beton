@@ -8,12 +8,3 @@ public func |> <Input, Output>(
 ) rethrows -> Output {
   try rhs(lhs())
 }
-
-@inlinable
-@discardableResult
-public func |> <Input, Output>(
-  lhs: @autoclosure () async throws -> Input,
-  rhs: (Input) async throws -> Output
-) async rethrows -> Output {
-  try await rhs(lhs())
-}
