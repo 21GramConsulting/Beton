@@ -13,3 +13,11 @@
 * Dumped JB for good.
 * Hacked through failing performance tests.
 * Finally dumped [Jazzy](https://github.com/realm/jazzy) in favor of SwiftDocC.
+
+## Fun
+
+Building for debugging...
+[310/310] Linking BetonPackageTests
+Build complete! (25.29s)
+
+* Terminal will be reused by tasks, press any key to close it.
