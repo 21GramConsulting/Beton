@@ -25,13 +25,15 @@ let package = Package(
       name: "Beton",
       dependencies: [
         .product(name: "AsyncAlgorithms", package: "swift-async-algorithms")
-      ]
+      ],
+      swiftSettings: swiftSettings
     ),
     .target(
       name: "XCTBeton",
       dependencies: [
         .byName(name: "Beton")
-      ]
+      ],
+      swiftSettings: swiftSettings
     ),
     .testTarget(type: .unit),
     .testTarget(type: .component),
@@ -63,3 +65,7 @@ extension PackageDescription.Target {
     )
   }
 }
+
+let swiftSettings: [SwiftSetting] = [
+  .unsafeFlags(["-Xfrontend", "-strict-concurrency=complete"])
+]
