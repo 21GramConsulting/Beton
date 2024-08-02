@@ -65,5 +65,5 @@ extension PackageDescription.Target {
 }
 
 let swiftSettings: [SwiftSetting] = [
-  .unsafeFlags(["-Xfrontend", "-strict-concurrency=complete"])
+  .enableExperimentalFeature("StrictConcurrency")
 ]
