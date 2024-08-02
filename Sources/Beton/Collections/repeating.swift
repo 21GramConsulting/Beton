@@ -1,33 +1,45 @@
 import AsyncAlgorithms
 import Foundation
 
-// MARK: Mappers
+@discardableResult
+@inlinable
+public func repeating<T>(
+  count: Int,
+  _ function: (Int) throws -> T
+) rethrows -> [T] {
+  var result = [T]()
+  result.reserveCapacity(count)
+  try (0..<count).forEach { index in
+    result.append(try function(index))
+  }
+  return result
+}
 
-/// Runs the provided callback consecutively one after another,
-/// passing the current iteration count as an argument,
-/// and returning the array of results in iteration order.
-/// - Parameters:
-///   - count: Number of times to run the given function.
-///   - function: The callback to execute mapping its results to the final result.
-/// - Returns: An array of all the values returned by the callback.
-@discardableResult public func repeating<T>(count: Int, _ function: (Int) -> T) -> [T] {
-  (0..<count).map { function($0) }
+public typealias RepeatingMapper<T> = ((Int) -> T) -> [T]
+@discardableResult
+@inlinable
+public func repeating<T>(
+  count: Int
+) -> RepeatingMapper<T> {
+  { function in repeating(count: count, function) }
+}
+
+public typealias ThrowingRepeatingMap<T> = ((Int) throws -> T) throws -> [T]
+@discardableResult
+@inlinable
+public func repeating<T>(
+  count: Int
+) -> ThrowingRepeatingMap<T> {
+  { try repeating(count: count, $0) }
 }
 
 public typealias AsyncRepeatingChannel<T: Sendable> = AsyncChannel<(iteration: Int, result: T)>
-where T: Sendable
-/// Runs the provided callback asynchronously,
-/// passing the current iteration count as an argument,
-/// and returning an AsyncSequence of the results.
-/// **This function is by design out-of-order.**
-/// - Parameters:
-///   - count: Number of times to run the given function.
-///   - function: The callback to execute, mapping results to the final result.
-/// - Returns: A channel of results.
-@discardableResult public func repeating<T>(
+@discardableResult
+@inlinable
+public func repeating<T: Sendable>(
   count: Int,
   _ function: @escaping (Int) async -> T
-) async -> AsyncRepeatingChannel<T> where T: Sendable {
+) async -> AsyncRepeatingChannel<T> {
   let channel = AsyncRepeatingChannel<T>()
 
   Task {
@@ -42,50 +54,49 @@ where T: Sendable
   return channel
 }
 
-// MARK: Resolvers
-
-/// Runs the provided callback consecutively one after another, returning the array of results in iteration order.
-/// - Parameters:
-///   - count: Number of times to run the given function.
-///   - function: The callback to execute mapping its results to the final result.
-/// - Returns: An array of all the values returned by the callback.
-@discardableResult public func repeating<T>(
+@discardableResult
+@inlinable
+public func repeating<T>(
   count: Int,
-  _ function: @autoclosure () -> T
-) -> [T] {
-  repeating(count: count) { _ in function() }
+  _ function: @autoclosure @escaping () throws -> T
+) rethrows -> [T] {
+  try repeating(count: count) { _ in try function() }
 }
 
-/// Runs the provided callback asynchronously, returning the results.
-/// **This function is by design out-of-order.**
-/// - Parameters:
-///   - count: Number of times to run the given function.
-///   - function: The callback to execute mapping its results to the final result.
-/// - Returns: A channel of all the values returned by the callback.
-@discardableResult public func repeating<T>(
+@discardableResult
+@inlinable
+public func repeating<T>(
+  count: Int,
+  _ function: @escaping () throws -> T
+) rethrows -> [T] {
+  try repeating(count: count) { _ in try function() }
+}
+
+public typealias RepeatingResolver<T> = (@escaping @autoclosure () -> T) -> [T]
+@discardableResult
+@inlinable
+public func repeating<T>(
+  count: Int
+) -> RepeatingResolver<T> {
+  { f in repeating(count: count) { _ in f() } }
+}
+
+public typealias ThrowingRepeatingResolver<T> = (
+  @escaping () throws -> T
+) throws -> [T]
+@discardableResult
+@inlinable
+public func repeating<T>(
+  count: Int
+) -> ThrowingRepeatingResolver<T> {
+  { f in try repeating(count: count) { _ in try f() } }
+}
+
+@discardableResult
+@inlinable
+public func repeating<T: Sendable>(
   count: Int,
   _ function: @escaping @autoclosure () async -> T
-) async -> AsyncRepeatingChannel<T> where T: Sendable {
+) async -> AsyncRepeatingChannel<T> {
   await repeating(count: count) { _ in await function() }
-}
-
-// MARK: Performers
-
-/// Runs the provided callback `count` number of times, ignoring its results.
-/// - Parameters:
-///   - count: Number of times to run the given function.
-///   - function: The callback to execute `count` times.
-public func repeating(count: Int, _ function: @autoclosure () -> Void) {
-  let _ = repeating(count: count) { [function] _ in function() }
-}
-
-/// Runs asynchronously the provided callback `count` number of times, ignoring the results.
-/// - Parameters:
-///   - count: Number of times to run the given function.
-///   - function: The callback to execute `count` times
-public func repeating(
-  count: Int,
-  _ function: @autoclosure @escaping () async -> Void
-) async {
-  let _ = await repeating(count: count) { _ in await function() }
 }

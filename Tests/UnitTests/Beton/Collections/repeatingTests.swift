@@ -3,11 +3,30 @@ import XCTBeton
 @testable import Beton
 
 class RepeatingTests: XCTestCase {
+  enum TestError: Error { case test }
   func testRepeatingSyncMapper() {
     XCTAssertEqual(repeating(count: 3) { $0 + 5 }, [5, 6, 7])
     XCTAssertEqual(repeating(count: 3) { $0 + 10 }, [10, 11, 12])
     XCTAssertEqual(repeating(count: 5) { $0 + 5 }, [5, 6, 7, 8, 9])
     XCTAssertEqual(repeating(count: 5) { $0 + 10 }, [10, 11, 12, 13, 14])
+  }
+
+  func testRepeatingSyncMapper_rethrows() {
+    XCTAssertThrowsError(try repeating(count: 3) { _ in throw TestError.test })
+  }
+
+  func testRepeatingSyncMapper_currying() {
+    let threeTimes: RepeatingMapper<Int> = repeating(count: 3)
+    let fiveTimes: RepeatingMapper<Int> = repeating(count: 5)
+    XCTAssertEqual(threeTimes({ $0 + 5 }), [5, 6, 7])
+    XCTAssertEqual(threeTimes({ $0 + 10 }), [10, 11, 12])
+    XCTAssertEqual(fiveTimes({ $0 + 5 }), [5, 6, 7, 8, 9])
+    XCTAssertEqual(fiveTimes({ $0 + 10 }), [10, 11, 12, 13, 14])
+  }
+
+  func testRepeatingSyncMapper_currying_rethrows() {
+    let threeTimes: ThrowingRepeatingMap<Int> = repeating(count: 3)
+    XCTAssertThrowsError(try threeTimes { _ in throw TestError.test })
   }
 
   func testRepeatingSyncResolver() {
@@ -17,7 +36,29 @@ class RepeatingTests: XCTestCase {
     XCTAssertEqual(repeating(count: 5, 10), [10, 10, 10, 10, 10])
   }
 
-  func testRepeatingSyncPerformer() {
+  func testRepeatingResolver_rethrows() {
+    XCTAssertThrowsError(try repeating(count: 3, { throw TestError.test }))
+  }
+
+  func testRepeatingResolver_currying() {
+    let threeTimes: RepeatingResolver<Int> = repeating(count: 3)
+    let fiveTimes: RepeatingResolver<Int> = repeating(count: 5)
+    XCTAssertEqual(threeTimes(5), [5, 5, 5])
+    XCTAssertEqual(threeTimes(10), [10, 10, 10])
+    XCTAssertEqual(fiveTimes(5), [5, 5, 5, 5, 5])
+    XCTAssertEqual(fiveTimes(10), [10, 10, 10, 10, 10])
+  }
+
+  func testRepeatingResolver_currying_rethrows() {
+    let threeTimes: ThrowingRepeatingResolver<Int> = repeating(count: 3)
+    XCTAssertThrowsError(
+      try threeTimes {
+        throw TestError.test
+      }
+    )
+  }
+
+  func testRepeatingSync_sideEffectFocused() {
     var counter = 0
 
     // swift-format-ignore
@@ -27,6 +68,15 @@ class RepeatingTests: XCTestCase {
     // swift-format-ignore
     repeating(count: 5, counter += 2)
     XCTAssertEqual(counter, 13)
+  }
+
+  func testRepeatingSync_sideEffectFocused_rethrows() {
+    let throwingCallback: () throws -> Void = { throw TestError.test }
+    XCTAssertThrowsError(
+      try repeating(count: 3) {
+        try throwingCallback()
+      }
+    )
   }
 
   func testRepeatingAsyncMapper() async throws {
@@ -44,8 +94,7 @@ class RepeatingTests: XCTestCase {
     }
   }
 
-  // TODO: got a weird test failure once, better to investigate: {"code":null,"killed":false,"signal":"SIGSEGV","cmd":"/Applications/Xcode.app/Contents/Developer/usr/bin/xctest /Users/rocskaadam/src/21gram.consulting/src/Beton/.build/debug/BetonPackageTests.xctest"}
-  func testRepeatingAsyncPerformer() async throws {
+  func testRepeatingAsync_sideEffectFocused() async throws {
     var a = [Int]()
     await repeating(count: 13, a.append(1))
     print(a)
