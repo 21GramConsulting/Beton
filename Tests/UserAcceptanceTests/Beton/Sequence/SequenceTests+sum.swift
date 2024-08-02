@@ -1,10 +1,8 @@
 import Beton
-import XCTest
+import XCTBeton
 
-extension CodeExamples {
-  fileprivate struct InvalidValue: Error {
-    let value: String
-  }
+class SequenceTests {
+  fileprivate struct InvalidValue: Error { let value: String }
 
   func testSequenceSumWithThrowIfOptional() throws {
     func parseMeter(_ s: String) throws -> Measurement<UnitLength> {

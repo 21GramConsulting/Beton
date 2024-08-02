@@ -1,23 +1,8 @@
-# 1.4.0
+# 1.5.0
 
-## Minor changes
+## Minor Changes
 
-* **ADDED**: [Duration](https://developer.apple.com/documentation/swift/duration) utility extension for those really long cases.
-* The Pipe operator! now you can do cool stuff
-  like: `3 |> increment |> double |> double |> increment` and get `11`.
-* `repeating` now supports throwing and other cases. Request features if you need more.
+## Patch Changes
 
-## Patch changes
-
-* Increased test coverage.
-* Dumped JB for good.
-* Hacked through failing performance tests.
-* Finally dumped [Jazzy](https://github.com/realm/jazzy) in favor of SwiftDocC.
-
-## Fun
-
-Building for debugging...
-[310/310] Linking BetonPackageTests
-Build complete! (25.29s)
-
-* Terminal will be reused by tasks, press any key to close it.
+* Reorganized tests to make them easier to comprehend and
+  match contemporary best practices.
