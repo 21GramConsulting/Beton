@@ -2,6 +2,8 @@
 
 ## Minor Changes
 
+* Strict concurrency related changes
+
 ## Patch Changes
 
 * Reorganized tests to make them easier to comprehend and
