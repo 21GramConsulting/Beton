@@ -38,7 +38,7 @@ public typealias AsyncRepeatingChannel<T: Sendable> = AsyncChannel<(iteration: I
 @inlinable
 public func repeating<T: Sendable>(
   count: Int,
-  _ function: @escaping (Int) async -> T
+  _ function: @Sendable @escaping (Int) async -> T
 ) async -> AsyncRepeatingChannel<T> {
   let channel = AsyncRepeatingChannel<T>()
 
@@ -96,7 +96,7 @@ public func repeating<T>(
 @inlinable
 public func repeating<T: Sendable>(
   count: Int,
-  _ function: @escaping @autoclosure () async -> T
+  _ function: @Sendable @escaping @autoclosure () async -> T
 ) async -> AsyncRepeatingChannel<T> {
   await repeating(count: count) { _ in await function() }
 }

@@ -95,8 +95,13 @@ class RepeatingTests: XCTestCase {
   }
 
   func testRepeatingAsync_sideEffectFocused() async throws {
-    var a = [Int]()
-    await repeating(count: 13, a.append(1))
-    print(a)
+    actor Counter {
+      var count = 0
+      func increment() { count += 1 }
+    }
+    let counter = Counter()
+    await repeating(count: 13, await counter.increment())
+    let result = await counter.count
+    XCTAssertEqual(result, 13)
   }
 }
