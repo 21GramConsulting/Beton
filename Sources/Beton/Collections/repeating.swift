@@ -41,12 +41,27 @@ public func repeating<T: Sendable>(
   _ function: @Sendable @escaping (Int) async -> T
 ) async -> AsyncRepeatingChannel<T> {
   let channel = AsyncRepeatingChannel<T>()
+  let results = await withTaskGroup(
+    of: (iteration: Int, result: T).self,
+    returning: [(iteration: Int, result: T)].self
+  ) { group in
+    for iteration in 0..<count {
+      group.addTask {
+        (iteration, await function(iteration))
+      }
+    }
+
+    var results: [(iteration: Int, result: T)] = []
+    results.reserveCapacity(count)
+    for await result in group {
+      results.append(result)
+    }
+    return results
+  }
 
   Task {
-    await withTaskGroup(of: Void.self) { group in
-      for i in 0..<count {
-        group.addTask { await channel.send((i, function(i))) }
-      }
+    for result in results {
+      await channel.send(result)
     }
     channel.finish()
   }

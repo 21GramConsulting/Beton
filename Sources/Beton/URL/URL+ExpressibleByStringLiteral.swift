@@ -1,6 +1,6 @@
 import Foundation
 
-extension URL: ExpressibleByStringLiteral {
+extension URL: @retroactive ExpressibleByStringLiteral {
   /// A convenience initializer that allows you to express a
   /// [`URL`](https://developer.apple.com/documentation/foundation/url) using a string literal.
   ///

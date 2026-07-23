@@ -1,4 +1,4 @@
-// swift-tools-version:5.9
+// swift-tools-version: 6.0
 
 import PackageDescription
 
@@ -25,21 +25,20 @@ let package = Package(
       name: "Beton",
       dependencies: [
         .product(name: "AsyncAlgorithms", package: "swift-async-algorithms")
-      ],
-      swiftSettings: swiftSettings
+      ]
     ),
     .target(
       name: "XCTBeton",
       dependencies: [
         .byName(name: "Beton")
-      ],
-      swiftSettings: swiftSettings
+      ]
     ),
     .testTarget(type: .unit),
     .testTarget(type: .performance),
     .testTarget(type: .regression),
     .testTarget(type: .userAcceptance),
-  ]
+  ],
+  swiftLanguageModes: [.v6]
 )
 
 /// MARK: Convenience units
@@ -63,7 +62,3 @@ extension PackageDescription.Target {
     )
   }
 }
-
-let swiftSettings: [SwiftSetting] = [
-  .enableExperimentalFeature("StrictConcurrency")
-]

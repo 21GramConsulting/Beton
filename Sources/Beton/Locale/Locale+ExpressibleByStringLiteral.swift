@@ -1,6 +1,6 @@
 import Foundation
 
-extension Locale: ExpressibleByStringLiteral {
+extension Locale: @retroactive ExpressibleByStringLiteral {
   /// A convenience initializer that allows you to express a
   /// [`Locale`](https://developer.apple.com/documentation/foundation/locale) using a string literal.
   ///
